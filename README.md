@@ -1,0 +1,2 @@
+# Geopark
+Lahden Ammattikorkeakoulun projekti
