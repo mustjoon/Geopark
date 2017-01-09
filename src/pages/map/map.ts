@@ -1,7 +1,7 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-
+import { Diagnostic } from 'ionic-native'; // DIAGNOSIIKKA
 import { ConferenceData } from '../../providers/conference-data';
-
+import { Geolocation } from 'ionic-native'; // GPS LUURIIN
 import { Platform } from 'ionic-angular';
 
 
@@ -17,13 +17,30 @@ export class MapPage {
   constructor(public confData: ConferenceData, public platform: Platform) {
   }
 
+  isLocation = true;
+
   ionViewDidLoad() {
+
+      this.platform.ready().then(() => {
+
+      Diagnostic.isLocationAvailable().then(function(res){
+        console.log(res);
+        if(res == false){
+           alert("Anna sovelluksen käyttää puhelimen GPS-yhteyttä ja käynnistä kartta uudelleen!");
+        }
+       
+        this.isLocation = res;
+      }).catch(function(err){
+         // this.isLocation = false;
+      });
+
+
 
       this.confData.getMap().subscribe(mapData => {
         let mapEle = this.mapElement.nativeElement;
         let josefov = new google.maps.LatLng( 59.83333, 68.90596);
 
-
+        
         // WMS LAYERI
         let SLPLayer = new google.maps.ImageMapType({
                     getTileUrl: function (coord, zoom) {
@@ -96,17 +113,22 @@ export class MapPage {
 
         let infoWindow = new google.maps.InfoWindow({map: map});
 
-        if(navigator.geolocation){
-          navigator.geolocation.getCurrentPosition(function(position){
+       
+            Geolocation.getCurrentPosition().then((position) => {
+          
             let pos = {
               lat: position.coords.latitude,
               lng: position.coords.longitude
             }
+            console.log("LOL");
             infoWindow.setPosition(pos);
             infoWindow.setContent("SUP");
             map.setCenter(pos);
+          }, (err) => {
+
           })
-        }
+          
+      
 
 
 
@@ -115,6 +137,7 @@ export class MapPage {
         });
 
       });
+    });
 
   }
 }

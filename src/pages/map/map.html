@@ -8,5 +8,8 @@
 </ion-header>
 
 <ion-content class="map-page">
+<button  *ngIf="!isLocation" ion-button icon-only (click)="ionViewDidLoad()">
+       Reload map
+      </button>
   <div style="height: 100%; width: 100%" #mapCanvas id="map_canvas"></div>
 </ion-content>
