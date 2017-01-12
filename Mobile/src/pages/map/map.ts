@@ -4,6 +4,8 @@ import { ConferenceData } from '../../providers/conference-data';
 import { Geolocation } from 'ionic-native'; // GPS LUURIIN
 import { Platform } from 'ionic-angular';
 
+import { AngularFireModule } from 'angularfire2';
+
 
 declare var google: any;
 
@@ -31,7 +33,7 @@ export class MapPage {
        
         this.isLocation = res;
       }).catch(function(err){
-         // this.isLocation = false;
+         console.log("Selataan tietokoneella..");
       });
 
 

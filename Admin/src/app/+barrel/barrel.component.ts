@@ -24,7 +24,57 @@ export class BarrelComponent extends OnInit {
  
 
   public ngOnInit() { 
+
+
+
     console.log('hello `Barrel` component');
+     var mapProp = {
+            center: new google.maps.LatLng(51.508742, -0.120850),
+            zoom: 5,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+       let SLPLayer = new google.maps.ImageMapType({
+                    getTileUrl: function (coord, zoom) {
+
+                        var proj = map.getProjection();
+                        var zfactor = Math.pow(2, zoom);
+                        // get Long Lat coordinates
+                        var top = proj.fromPointToLatLng(new google.maps.Point(coord.x * 256 / zfactor, coord.y * 256 / zfactor));
+                        var bot = proj.fromPointToLatLng(new google.maps.Point((coord.x + 1) * 256 / zfactor, (coord.y + 1) * 256 / zfactor));
+
+                        //corrections for the slight shift of the SLP (mapserver)
+                        var deltaX = 0.0013;
+                        var deltaY = 0.00058;
+
+                        //create the Bounding box string
+                        var bbox =     (top.lng() + deltaX) + "," +
+                                     (bot.lat() + deltaY) + "," +
+                                     (bot.lng() + deltaX) + "," +
+                                     (top.lat() + deltaY);
+
+                        //base WMS URL
+                        var url = "http://tiles.kartat.kapsi.fi/peruskartta?";
+                        url += "&REQUEST=GetMap"; //WMS operation
+                        url += "&SERVICE=WMS";    //WMS service
+                        url += "&VERSION=1.1.1";  //WMS version  
+                      //  url += "&LAYERS=" + "typologie,hm2003"; //WMS layers
+                        url += "&FORMAT=image/png" ; //WMS format
+                        url += "&BGCOLOR=0xFFFFFF";  
+                        url += "&TRANSPARENT=TRUE";
+                        url += "&SRS=EPSG:4326";     //set WGS84 
+                        url += "&BBOX=" + bbox;      // set bounding box
+                        url += "&WIDTH=256";         //tile size in google
+                        url += "&HEIGHT=256";
+                        url += "&LAYERS=peruskartta";
+                       
+                        return url;                 // return URL for the tile
+
+                    },
+                    tileSize: new google.maps.Size(256, 256),
+                    isPng: true
+                });
+        var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+        map.overlayMapTypes.push(SLPLayer);
   }
 
    // google maps zoom level
@@ -38,10 +88,14 @@ export class BarrelComponent extends OnInit {
     console.log(`clicked the marker: ${label || index}`)
   }
   
-  mapClicked($event: MouseEvent) {
-    this.markers.push({
+  mapClicked($event) {
+
+
+     this.markers.push({
       lat: $event.coords.lat,
-      lng: $event.coords.lng
+      lng: $event.coords.lng,
+      label: 'A',
+      draggable: true
     });
   }
   
@@ -78,4 +132,4 @@ interface marker {
   draggable: boolean;
 }
 
-}
+
