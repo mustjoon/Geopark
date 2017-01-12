@@ -1,1 +1,7 @@
   <div id="googleMap" style="width:500px;height:380px;"></div>
+  
+  <ul>
+      <li class="text" *ngFor="let item of items | async">
+          {{item.$key}} {{item.info}}  {{item.lat}}  {{item.lng}}
+    </li>
+  </ul>

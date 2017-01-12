@@ -23,6 +23,8 @@ import { ENV_PROVIDERS } from './environment';
 import { ROUTES } from './app.routes';
 // App is our top level component
 import { AppComponent } from './app.component';
+//// FIREBASE
+import { AngularFireModule } from 'angularfire2';
 import { APP_RESOLVER_PROVIDERS } from './app.resolver';
 import { AppState, InternalStateType } from './app.service';
 import { HomeComponent } from './home';
@@ -32,6 +34,16 @@ import { XLargeDirective } from './home/x-large';
 
 import '../styles/styles.scss';
 import '../styles/headings.css';
+
+
+// Must export the config
+export const firebaseConfig = {
+    apiKey: "AIzaSyBre3CNxTAQmBUs8UDnii9-8YBaM-3KyZg",
+    authDomain: "geopark-7e0a8.firebaseapp.com",
+    databaseURL: "https://geopark-7e0a8.firebaseio.com",
+    storageBucket: "geopark-7e0a8.appspot.com",
+    messagingSenderId: "369902728048"
+ };// FIREBASE END
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -59,6 +71,7 @@ type StoreType = {
   ],
   imports: [ // import Angular's modules
     BrowserModule,
+    AngularFireModule.initializeApp(firebaseConfig),
     FormsModule,
     HttpModule,
     RouterModule.forRoot(ROUTES, { useHash: true, preloadingStrategy: PreloadAllModules }),
