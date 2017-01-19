@@ -1,7 +1,13 @@
-  <div id="googleMap" style="width:500px;height:380px;"></div>
+<div id="googleMap" style="width:500px;height:380px;"></div>
   
-  <ul>
-      <li class="text" *ngFor="let item of items | async">
-          {{item.$key}} {{item.info}}  {{item.lat}}  {{item.lng}}
+<!--<ul>
+    <li class="text" *ngFor="let item of items | async">
+        {{item.$key}} {{item.info}}  {{item.lat}}  {{item.lng}}
     </li>
-  </ul>
+</ul>-->
+
+<div> {{ guideTxt }} </div>
+<!-- Colored raised button -->
+<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" (click)="UusiKohde('Lisää uusi kohde.')">
+  Aloita uusi reitti
+</button>
