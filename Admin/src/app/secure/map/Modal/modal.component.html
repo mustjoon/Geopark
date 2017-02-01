@@ -1,0 +1,24 @@
+
+<div   (hide)="onDialogHide()" >
+  <h3 class="mdl-dialog__title">App Login</h3>
+
+  <div class="mdl-dialog__content">
+    <mdl-textfield  type="text" label="Username" floating-label></mdl-textfield>
+    <br/>
+    <mdl-textfield type="password" label="Password"  floating-label></mdl-textfield>
+  </div>
+
+  <div class="mdl-dialog__actions">
+    <button
+      type="button"
+      mdl-button (click)="login()"
+    
+      mdl-button-type="raised"
+      mdl-colored="primary" mdl-ripple>Login</button>
+      <button
+      type="button"
+      mdl-button (click)="closeDialog()"
+      mdl-button-type="raised"
+      mdl-colored="primary" mdl-ripple>Cancel</button>
+  </div>
+</div>

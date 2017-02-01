@@ -2,6 +2,16 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { AgmCoreModule } from 'angular2-google-maps/core';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
+import { MdlModule } from 'angular2-mdl';
+import { VexDemoModule } from './vex-demo/vex-demo.module';
+import { JSNativeDemoModule } from './js-native-demo/js-native-demo.module';
+
+
+import { AuthService } from './auth.service';
+import { CanActivateViaAuthGuard} from './CanActivateViaAuthGuard'
+
 import {
   NgModule,
   ApplicationRef
@@ -29,7 +39,10 @@ import { APP_RESOLVER_PROVIDERS } from './app.resolver';
 import { AppState, InternalStateType } from './app.service';
 import { HomeComponent } from './home';
 import { AboutComponent } from './about';
+import { LoginComponent } from './login';
 import { NoContentComponent } from './no-content';
+
+
 import { XLargeDirective } from './home/x-large';
 
 import '../styles/styles.scss';
@@ -48,7 +61,10 @@ export const firebaseConfig = {
 // Application wide providers
 const APP_PROVIDERS = [
   ...APP_RESOLVER_PROVIDERS,
-  AppState
+  AppState,
+  AuthService,
+  CanActivateViaAuthGuard
+ 
 ];
 
 type StoreType = {
@@ -67,12 +83,18 @@ type StoreType = {
     AboutComponent,
     HomeComponent,
     NoContentComponent,
+    LoginComponent,
     XLargeDirective
+   
   ],
   imports: [ // import Angular's modules
     BrowserModule,
+    BrowserModule, 
+    NgbModule.forRoot(),       
+    BootstrapModalModule,
     AngularFireModule.initializeApp(firebaseConfig),
     FormsModule,
+    MdlModule,
     HttpModule,
     RouterModule.forRoot(ROUTES, { useHash: true, preloadingStrategy: PreloadAllModules }),
      AgmCoreModule.forRoot({
@@ -123,6 +145,7 @@ export class AppModule {
   }
 
   public hmrAfterDestroy(store: StoreType) {
+    console.log("HURRAA");
     // display new elements
     store.disposeOldHosts();
     delete store.disposeOldHosts;

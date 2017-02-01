@@ -7,6 +7,7 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import { AppState } from './app.service';
+import {Router} from '@angular/router';
 
 /*
  * App Component
@@ -27,11 +28,15 @@ export class AppComponent implements OnInit {
   public url = 'https://twitter.com/AngularClass';
 
   constructor(
-    public appState: AppState
+    public appState: AppState,
+    private router: Router
   ) {}
 
   public ngOnInit() {
     console.log('Initial App State', this.appState.state);
+    this.router.events.subscribe(path => {
+   //   console.log('path = ', path);
+    });
   }
 
 }

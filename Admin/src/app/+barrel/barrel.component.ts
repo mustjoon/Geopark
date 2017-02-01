@@ -1,8 +1,12 @@
 import {AngularFire, FirebaseListObservable} from 'angularfire2';
+import {MdlDialogModule, MdlSnackbaModule,MdlDialogReference} from 'angular2-mdl';
+import { Overlay } from 'angular2-modal';
+import {ModalComponent} from './Modal/modal';
 
 import {
   Component,
   OnInit,
+  ViewContainerRef 
 } from '@angular/core';
 
 import {
@@ -27,12 +31,20 @@ export class BarrelComponent extends OnInit {
   
     items: FirebaseListObservable<any[]>;
     map: any;
-   public waitingForPoint : boolean = false;
+    waitingForPoint : boolean = false;
     guideText : string;
-    constructor(af: AngularFire){
+
+
+
+
+    constructor(af: AngularFire,private _dialog: MdlDialogModule, private _snackbar: MdlSnackbaModule){
         super();
         this.items = af.database.list('/Kohteet');
+        
     }
+
+       
+    
     
     public ngOnInit() { 
 
@@ -58,6 +70,11 @@ export class BarrelComponent extends OnInit {
               }
           }); 
     }
+
+   
+
+
+
 
     public getSLPlayer(map){
       return new google.maps.ImageMapType({
