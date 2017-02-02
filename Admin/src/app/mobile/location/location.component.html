@@ -1,0 +1,11 @@
+<ul>
+    <li *ngFor="let spot of spots | async">
+        {{spot.$key}}
+        {{spot.lat}}
+        {{spot.lng}}
+    </li>
+  </ul>
+
+
+
+  <div id="googleMap" style="width:500px;height:380px;"></div>

@@ -14,6 +14,7 @@ export const ROUTES: Routes = [
   { path: 'detail', loadChildren: './+detail#DetailModule'},
   { path: 'map', canActivate :[CanActivateViaAuthGuard],  loadChildren: './+barrel#BarrelModule'},
   { path: 'secure', canActivate:[CanActivateViaAuthGuard], loadChildren : './secure#SecureModule'},
+  { path: 'mobile', loadChildren : './mobile#MobileModule'},
   { path: 'login', component : LoginComponent },
   { path: '**',    component: NoContentComponent }
  

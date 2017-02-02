@@ -1,45 +1,39 @@
 import { CommonModule } from '@angular/common';
-import { FormsModule,ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AgmCoreModule } from 'angular2-google-maps/core';
-import { routes } from './map.routes';
-import { MapComponent } from './map.component';
+import { routes } from './mobile.routes';
+import { MobileComponent } from './mobile.component';
+import { LocationsComponent } from './locations/locations.component';
+import { LocationComponent } from './location/location.component';
+import { MapModule } from './map/map.module';
 import { MdlModule } from 'angular2-mdl';
-import {ModalComponent} from './Modal/modal.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import { MdlSelectModule } from '@angular2-mdl-ext/select';
-import {MdlPopoverModule} from  '@angular2-mdl-ext/popover';
+
+
 
 console.log('`Barrel` bundle loaded asynchronously');
 
 @NgModule({
   declarations: [
     // Components / Directives/ Pipes
-    MapComponent,
-    ModalComponent
-
-   
+    MobileComponent,
+   LocationsComponent,
+   LocationComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
     MdlModule,
+    MapModule,
     NgbModule,
-    MdlSelectModule,
-    MdlPopoverModule,
-    ReactiveFormsModule,
+    RouterModule.forChild(routes),
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyB9ZP_cBqTRe2cMhbqKqWCPBnbBoflO4Cc'
     })
   ],
-  entryComponents : [
-  ModalComponent
-  ],
-  exports : [
-  MapComponent]
- 
 })
-export class MapModule {
+export class MobileModule {
   public static routes = routes;
 }

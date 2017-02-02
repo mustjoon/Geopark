@@ -1,8 +1,7 @@
 import {AngularFire, FirebaseListObservable} from 'angularfire2';
 import {googleMapsService} from './googleMaps.service';
 import { Overlay } from 'angular2-modal';
-import {ModalComponent} from './Modal/modal.component';
-
+ import {ModalComponent} from './Modal/modal.component';
 import { MdlDialogService,
   MdlDialogReference,MdlSnackbarService,IOpenCloseRect } from 'angular2-mdl';
 import {
@@ -41,37 +40,14 @@ export class MapComponent extends OnInit {
     kuva: any;
     test: any;
     dialog: MdlDialogReference;
-    TMP_currentMarkerLocation: any; // Tmp save clicked location here and wait for confirm
-    new_targets : any[];
-    afs: any;
 
-    // FORM DATA
-    target_name: string;
-    target_info: string;
-    target_img: string;
-    target_video: string;
-    target_latitude: string;
-    target_longitude: string;
 
-    // CATEGORY LIST
-    categories: any[];
-
-    constructor(modal: ModalComponent, af: AngularFire, private dialogService: MdlDialogService,
+    constructor(modal: ModalComponent,af: AngularFire, private dialogService: MdlDialogService,
     private snackbarService: MdlSnackbarService,private googleMapsService : googleMapsService){
         super();
-        this.afs = af;
-        this.items = af.database.list('/geopark_dev/');
-   
-        this.modal = modal; 
-        this.new_targets = []; 
-        this.categories = [];
-        this.categories.push({id: 1, name: "Puut"});
-        this.categories.push({id: 2, name: "Kivet"});
-        this.categories = af.database.list('/geopark_dev/config/Kategoriat');
-
+        this.items = af.database.list('/Kohteet');
+        this.modal = modal;  
     }
-
- 
 
       
     public ngOnInit() { 
@@ -109,61 +85,17 @@ export class MapComponent extends OnInit {
     }
 
     public addMarker(location) {
-      // Jos "Tee uusi kohde"-nappia painettu
       if(this.waitingForPoint == true){
-          
         document.getElementById("open").click();
-        
         var marker = new google.maps.Marker({
           position: location,
           map: this.map
         });
-        
         console.log(this.modal);
         this.modal.onDialogShow();
-       // this.markers.push(marker);
-        this.TMP_currentMarkerLocation = location;
-        this.target_latitude = location.lat();
-        this.target_longitude = location.lng();
+        this.markers.push(marker);
+      
       }
-    }
-    
-    public SaveNewLocationInfo()
-    {
-        // Get data from the form and push to new_targets
-        this.new_targets.push(
-            {
-                name :this.target_name,
-                info: this.target_info,
-                img: this.target_img,
-                video: this.target_video,
-                latitude: this.TMP_currentMarkerLocation.lat(),
-                longitude: this.TMP_currentMarkerLocation.lng()
-            }
-        );
-
-         document.getElementById("closeBtn").click();
-         this.target_name = this.target_info = this.target_img = this.target_video = "";
-    }
-
-    public FinalSave()
-    {
-      //let lol = this.afs.database.list('/geopark_dev/Kohteet/Puut/');
-      let lol = this.afs.database.list('/geopark_dev/Kohteet/');
-       
-       //TODO
-       //let exists = this.afs.database.list('/geopark_dev/Kohteet/Puut/paskaaon');
-       
-        //this.afs.database.ref('/geopark_dev/Kohteet/puut/').set(this.new_targets);
-
-      for(let i=0; i<this.new_targets.length; i++)
-      {
-        let subFolder = "/Puut/";
-        let name = this.new_targets[i].name;
-        delete this.new_targets[i].name;
-        lol.update(subFolder + name, this.new_targets[i]);
-      }
-       
     }
 
     public readFile(event) {

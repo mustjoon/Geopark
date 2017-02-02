@@ -1,0 +1,5 @@
+<ul>
+    <li *ngFor="let location of locations | async">
+        <a  [routerLink]=" ['location/'+location.$key] " >{{ location.$key }}</a>
+    </li>
+  </ul>

@@ -77,6 +77,8 @@
     "@angular/platform-browser-dynamic": "~2.4.1",
     "@angular/platform-server": "~2.4.1",
     "@angular/router": "~3.4.1",
+    "@angular2-mdl-ext/popover": "^0.5.0",
+    "@angular2-mdl-ext/select": "^0.8.2",
     "@angularclass/conventions-loader": "^1.0.2",
     "@angularclass/hmr": "~1.2.2",
     "@angularclass/hmr-loader": "~3.0.2",
