@@ -1,2 +1,6 @@
 /Admin/nbproject/private/
 /Mobile/nbproject/private/
+Admin/package.json
+*.json
+Admin/src/app/+barrel/barrel.component.html
+Admin/src/index.html

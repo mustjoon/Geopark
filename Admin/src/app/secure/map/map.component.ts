@@ -64,9 +64,6 @@ export class MapComponent extends OnInit {
    
         this.modal = modal; 
         this.new_targets = []; 
-        this.categories = [];
-        this.categories.push({id: 1, name: "Puut"});
-        this.categories.push({id: 2, name: "Kivet"});
         this.categories = af.database.list('/geopark_dev/config/Kategoriat');
 
     }
