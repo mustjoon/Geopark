@@ -8,8 +8,8 @@ import { MapComponent } from './map.component';
 import { MdlModule } from 'angular2-mdl';
 import {ModalComponent} from './Modal/modal.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import { MdlSelectModule } from '@angular2-mdl-ext/select';
-import {MdlPopoverModule} from  '@angular2-mdl-ext/popover';
+
+
 
 console.log('`Barrel` bundle loaded asynchronously');
 
@@ -26,8 +26,7 @@ console.log('`Barrel` bundle loaded asynchronously');
     FormsModule,
     MdlModule,
     NgbModule,
-    MdlSelectModule,
-    MdlPopoverModule,
+   
     ReactiveFormsModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyB9ZP_cBqTRe2cMhbqKqWCPBnbBoflO4Cc'

@@ -4,10 +4,10 @@ import {
 } from '@angular/core';
 
 import { AppState } from '../app.service';
-
+import {AngularFire, AuthProviders, AuthMethods } from 'angularfire2';
 import { XLargeDirective } from './x-large';
-import {AuthService} from '../auth.service';
 
+import {Router} from '@angular/router';
 @Component({
   // The selector is what angular internally uses
   // for `document.querySelectorAll(selector)` in our index.html
@@ -25,23 +25,54 @@ import {AuthService} from '../auth.service';
 export class LoginComponent implements OnInit {
   // Set our default values
 
+  email: string;
+  password: string;
   // TypeScript public modifiers
   constructor(
     public appState: AppState,
-    public auth: AuthService
+    public af: AngularFire,
+    private router: Router
   
-  ) {}
+  ) {
+     this.af.auth.subscribe(auth => console.log(auth));
+  }
 
   // ON INIT SUORITETAAN HETI, KUN SIVULLE TULLAAN
 
   public ngOnInit() {
     console.log('hello `Login` component');
-    // this.title.getData().subscribe(data => this.data = data);
+    this.af.auth.logout();
   }
 
-  public login(username,password) {
-    this.auth.login();
+  
+
+  login() {
+    this.af.auth.login({
+      provider: AuthProviders.Google,
+      method: AuthMethods.Popup,
+    });
   }
+  overrideLogin() {
+    this.af.auth.login({
+      provider: AuthProviders.Anonymous,
+      method: AuthMethods.Anonymous,
+    });
+  }
+
+  emailLogin(){
+    this.af.auth.login({
+      email: this.email,
+      password: this.password
+    },
+    {
+      provider: AuthProviders.Password,
+      method: AuthMethods.Password,
+    }).then(res=>  this.router.navigateByUrl('secure'))
+    .catch(err => console.log("error"))
+    
+  }
+
+
 
   
 }

@@ -36,7 +36,7 @@
 
   <!-- SELECT -->
   <label for="singleSelect"> Kategoriat: </label><br>
-  <select>
+  <select id="selectbox">
     <option *ngFor="let c of categories  | async" value="{{c.$value}}" >{{c.$value}}</option>
   </select>
 

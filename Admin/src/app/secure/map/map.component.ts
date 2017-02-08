@@ -35,7 +35,7 @@ export class MapComponent extends OnInit {
     items: FirebaseListObservable<any[]>;
     map: any;
     waitingForPoint : boolean = false;
-    guideText : string;
+    guideTxt : string;
     markers : any[];
     modal: any;
     kuva: any;
@@ -44,6 +44,7 @@ export class MapComponent extends OnInit {
     TMP_currentMarkerLocation: any; // Tmp save clicked location here and wait for confirm
     new_targets : any[];
     afs: any;
+
 
     // FORM DATA
     target_name: string;
@@ -54,19 +55,15 @@ export class MapComponent extends OnInit {
     target_longitude: string;
 
     // CATEGORY LIST
-    categories: any[];
+    categories: FirebaseListObservable<any[]>;
 
     constructor(modal: ModalComponent, af: AngularFire, private dialogService: MdlDialogService,
     private snackbarService: MdlSnackbarService,private googleMapsService : googleMapsService){
         super();
         this.afs = af;
         this.items = af.database.list('/geopark_dev/');
-   
         this.modal = modal; 
         this.new_targets = []; 
-        this.categories = [];
-        this.categories.push({id: 1, name: "Puut"});
-        this.categories.push({id: 2, name: "Kivet"});
         this.categories = af.database.list('/geopark_dev/config/Kategoriat');
 
     }
@@ -182,7 +179,7 @@ export class MapComponent extends OnInit {
     public UusiKohde(text){
      // this.showDialog();
 
-      this.guideText = text;
+      this.guideTxt = "Valitse piste kartalta!";
       this.waitingForPoint = true;
 
     }
