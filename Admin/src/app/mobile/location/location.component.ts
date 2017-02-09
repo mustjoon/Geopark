@@ -34,6 +34,7 @@ export class LocationComponent extends OnInit {
     id:any;
     map: any;
     items: any[];
+    info: any[];
 
 
     constructor(af: AngularFire,private _routeParams: ActivatedRoute){
@@ -67,17 +68,43 @@ export class LocationComponent extends OnInit {
           this.spots.subscribe(x => {
             console.log(map);
             this.items = x;
-            
+
+            let Points = [];
+
             this.items.map(function(value){
 
-              console.log(value);
+              console.log(value.info);
+              var infowindow = new google.maps.InfoWindow({
+              content: value.info,
+              maxWidth: 150
+              });
+
              var marker = new google.maps.Marker({
                 position: new google.maps.LatLng(value.latitude, value.longitude),
                 map: map,
                 title: 'Hello World!'
               });
-              
+
+              marker.addListener('click', function() {
+            infowindow.open(map, marker);
+            document.getElementById("infooo").innerHTML = value.info;
+          });
+
+               var flightPlanCoordinates =
+          {lat: value.latitude, lng: value.longitude};
+          Points.push(flightPlanCoordinates);
+
            })
+
+          var flightPath = new google.maps.Polyline({
+          path: Points,
+          geodesic: true,
+          strokeColor: '#FF0000',
+          strokeOpacity: 1.0,
+          strokeWeight: 2
+        });
+
+        flightPath.setMap(map);
           });
         
          /*
