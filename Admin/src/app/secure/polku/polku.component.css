@@ -15,7 +15,7 @@ select.selectbox, select#selectbox-color {
    background-position: 97% center;
    background-repeat: no-repeat;
    /*border: 1px solid #AAA;*/
-   color: rgb(225,225,225);
+   color: #000;
    font-size: inherit;
    /*margin: 20px;*/
    margin: 20px 0px;

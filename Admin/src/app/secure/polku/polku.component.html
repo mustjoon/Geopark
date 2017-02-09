@@ -1,0 +1,41 @@
+  <div id="googleMap" style="width:500px;height:380px;"></div>
+    
+  <div> {{ guideTxt }} </div>
+  <!-- Colored raised button -->
+  <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" (click)="UusiKohde('Lisää uusi kohde.')">
+    Tee uusi kohde
+  </button>
+
+  <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" (click)="FinalSave()">
+    Tallenna kohteet
+  </button>
+
+  <button style="display:none" id="open" #editUserButton mdl-button mdl-button-type="raised" mdl-colored="primary"
+        mdl-ripple (click)="editUserDialog.show()">Edit User Dialog</button>
+
+
+  <br>
+  <br>
+
+  <!-- CATEGORY -->
+  <label for="singleSelect"> Kategoriat: </label><br>
+  <select class="selectbox" [(ngModel)]="activeCategory" (change)="CategoryChange()">
+    <option *ngFor="let c of categories  | async" value="{{c.$value}}" >{{c.$value}}</option>
+  </select>
+
+  <!-- SPOTS -->
+  <label for="singleSelect"> Kohteet: </label><br>
+  <select class="selectbox" [(ngModel)]="lastSelectedSpot" (change)="SpotSelect()">
+    <option *ngFor="let s of spots  | async" value="{{s.$key}}" >{{s.$key}}</option>
+  </select>
+
+
+
+
+
+
+
+
+
+
+

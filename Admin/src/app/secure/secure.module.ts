@@ -5,10 +5,11 @@ import { RouterModule } from '@angular/router';
 import { AgmCoreModule } from 'angular2-google-maps/core';
 import { routes } from './secure.routes';
 import { SecureComponent } from './secure.component';
-import {NoContentComponent} from './no-content/no-content.component';
+import { NoContentComponent } from './no-content/no-content.component';
+import { PolkuComponent } from './polku/polku.component';
 import { MapModule } from './map/map.module';
 import { MdlModule } from 'angular2-mdl';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -18,8 +19,8 @@ console.log('`Barrel` bundle loaded asynchronously');
   declarations: [
     // Components / Directives/ Pipes
     SecureComponent,
-    NoContentComponent
-   
+    NoContentComponent,
+    PolkuComponent
   ],
   imports: [
     CommonModule,
