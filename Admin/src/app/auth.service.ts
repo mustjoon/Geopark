@@ -1,10 +1,24 @@
 import { Injectable } from '@angular/core';
-import {AngularFire, FirebaseListObservable} from 'angularfire2';
+import {AngularFire, AuthProviders, AuthMethods, FirebaseListObservable} from 'angularfire2';
 @Injectable()
 export class AuthService {
 
+	logged: boolean= false;
+
+	constructor( public af: AngularFire){
+		 af.auth.subscribe(
+      (auth) => {
+      	if(auth){
+      		this.logged = true;
+      	}
+      	this.logged = true;
+      })
+		
+	 }
+	
+
 	//FIREBASE 
-    af: AngularFire;
+    
 
     // KIRJAUTUU SISÄÄN
 	login(): void{
@@ -14,7 +28,14 @@ export class AuthService {
 	// KATSOO ONKO KÄYTTÄJÄ KIRJAUTUNUT SISÄÄN
 
 
-	isAuthenticated(): boolean{ return true;}
+	 isAuthenticated():  boolean{
+	 	console.log(this.logged);
+	 	return this.logged;
+	 }
+
+		
+		//this.af.auth.logout();
+		
 
 	//KIRJAUTUU ULOS
 	logout() : void {
