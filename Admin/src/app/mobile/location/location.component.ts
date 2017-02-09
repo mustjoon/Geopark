@@ -70,9 +70,9 @@ export class LocationComponent extends OnInit {
             
             this.items.map(function(value){
 
-              
+              console.log(value);
              var marker = new google.maps.Marker({
-                position: new google.maps.LatLng(value.lat, value.lng),
+                position: new google.maps.LatLng(value.latitude, value.longitude),
                 map: map,
                 title: 'Hello World!'
               });
