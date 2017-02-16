@@ -35,13 +35,13 @@ class ProductBuy {
   `
 })
 @RouteConfig([
-  {path: '/info', name: 'Info', component: ProductInfo, useAsDefault: true}
+  {path: '/info', name: 'Info', component: ProductInfo, useAsDefault: true},
   {path: '/buy', name: 'Buy', component: ProductBuy}
 ])
 class Product {
   pid
-  constructor(params: RouteParams) {
-    this.pid = params.get('pid')
+  constructor(/*params: RouteParams*/) {
+    //this.pid = params.get('pid')
   }
 }
 
@@ -72,7 +72,7 @@ class StoreInfo {
   `
 })
 @RouteConfig([
-  {path: '/', name: 'StoreInfo', component: StoreInfo, useAsDefault: true}
+  {path: '/', name: 'StoreInfo', component: StoreInfo, useAsDefault: true},
   {path: '/product/:pid/...', name: 'Product', component: Product}
 ])
 export class App {
