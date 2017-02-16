@@ -1,5 +1,5 @@
-  <div id="googleMap" style="width:500px;height:380px;"></div>
-    
+  <div id="googleMap" style="width:800px;height:500px;"></div>
+
   <div> {{ guideTxt }} </div>
   <!-- Colored raised button -->
   <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" (click)="UusiKohde('Lisää uusi kohde.')">
@@ -28,6 +28,7 @@
   <select class="selectbox" [(ngModel)]="lastSelectedSpot" (change)="SpotSelect()">
     <option *ngFor="let s of spots  | async" value="{{s.$key}}" >{{s.$key}}</option>
   </select>
+
 
 
 

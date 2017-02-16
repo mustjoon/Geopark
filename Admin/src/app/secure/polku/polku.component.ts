@@ -50,6 +50,7 @@ export class PolkuComponent extends OnInit {
     dialog: MdlDialogReference;
     afs: any;
 
+    currentlySelectedSpotData: any[];
 
     constructor(af: AngularFire, private dialogService: MdlDialogService,
     private snackbarService: MdlSnackbarService,private googleMapsService : googleMapsService){
@@ -75,6 +76,7 @@ export class PolkuComponent extends OnInit {
         this.map.overlayMapTypes.push(SLPLayer);
         this.allSpots = [];
         let allSpots = this.allSpots;
+        let AddSpotToRoute = this.AddSpotToRoute;
 
         this.allSpotsLink.subscribe(_content => {
 
@@ -84,28 +86,48 @@ export class PolkuComponent extends OnInit {
                 {
                     if(_categories[key].latitude == undefined)
                     {
-                        console.log("Olet tuntematon");
+
                     }
                     else
                     {
-                        allSpots.push(_categories[key]);
-
-                        var infowindow = new google.maps.InfoWindow({
-                            content: _categories[key].info,
-                            maxWidth: 150
+                        var marker = new google.maps.Marker({
+                            category: _categories.$key,
+                            name: key,
+                            position: new google.maps.LatLng(_categories[key].latitude, _categories[key].longitude),
                         });
 
-                        var marker = new google.maps.Marker({
-                            position: new google.maps.LatLng(_categories[key].latitude, _categories[key].longitude),
-                            map: map,
-                            title: 'Hello World!'
+                        let infowindow = new google.maps.InfoWindow({
+                            content:'<div id="infowindow" class="demo-card-wide mdl-card mdl-shadow--2dp">'+
+                                    '<div class="mdl-card__title">'+
+                                    '<h2 id="infowindow_title" class="mdl-card__title-text">'+ key +'</h2>'+
+                                    '</div>'+
+                                    '<div id="infowindow_text" class="mdl-card__supporting-text">'+  _categories[key].info + '</div>'+
+                                    '<div id="btn_addToRoute" class="mdl-card__actions mdl-card--border">'+
+                                    '<a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">'+
+                                    'Lisää reittiin'+
+                                    '</a>'+
+                                    '</div>'+
+                                    '</div>';
                         });
 
                         marker.addListener('click', function() {
-                            infowindow.open(map, marker);
+
+                            infowindow.open(map, this);
+
+                            let name = this.name;
+                            let category = this.category;
+                            
+                            document.getElementById('btn_addToRoute').onclick = function(){
+                                AddSpotToRoute(name, category);
+                            }
                         });
+
+                        allSpots.push(marker);
                     }
                 }
+
+                var markerCluster = new MarkerClusterer(map, allSpots,
+                {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
             });
 
         });
@@ -133,6 +155,11 @@ export class PolkuComponent extends OnInit {
 
     }
 
+    public AddSpotToRoute(_name, _category)
+    {
+        console.log(_name, " ____ ", _category);
+    }
+
     public SpotSelect()
     {
         var marker = new google.maps.Marker({
@@ -140,8 +167,8 @@ export class PolkuComponent extends OnInit {
             map: this.map
         });
 
-        //this.existingSpotMarkers.push(this.spotList[this.lastSelectedSpot].$key);
-        console.log(this.spotList[this.lastSelectedSpot].key);
+        // this.existingSpotMarkers.push(this.spotList[this.lastSelectedSpot].$key);
+        // console.log(this.spotList[this.lastSelectedSpot].key);
     }
 
 }

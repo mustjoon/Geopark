@@ -75,8 +75,7 @@ export class LocationComponent extends OnInit {
 
               console.log(value.info);
               var infowindow = new google.maps.InfoWindow({
-              content: value.info,
-              maxWidth: 150
+              content: value.info
               });
 
              var marker = new google.maps.Marker({
