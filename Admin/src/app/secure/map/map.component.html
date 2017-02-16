@@ -40,10 +40,11 @@
     <option *ngFor="let c of categories  | async" value="{{c.$value}}" >{{c.$value}}</option>
   </select>
 
-    <mdl-textfield type="text" label="Nimi" [(ngModel)]="target_name" floating-label autofocus></mdl-textfield>
+    <mdl-textfield type="text" id="nameasd" label="Nimi" [(ngModel)]="target_name" floating-label autofocus></mdl-textfield>
     <mdl-textfield type="text" label="Lisäinfo" [(ngModel)]="target_info" floating-label autofocus></mdl-textfield>
-    <mdl-textfield type="text" label="Kuvalinkki" [(ngModel)]="target_img" floating-label autofocus></mdl-textfield>
-    <mdl-textfield type="text" label="Videolinkki" [(ngModel)]="target_video" floating-label autofocus></mdl-textfield>
+    <input type="file" id="uploadthisFILE" label="Kuvalinkki"  (change)="onChange($event)"  floating-label autofocus>
+
+    <input type="file"  label="Videolinkki" [(ngModel)]="target_video"   (change)="onVideoChange($event)" floating-label autofocus>
     <mdl-textfield type="text" label="Esikatselu etäisyys" [(ngModel)]="target_previewDistance" floating-label autofocus></mdl-textfield>
     <mdl-textfield type="text" label="Latitude" [(ngModel)]="target_latitude" floating-label autofocus disabled="true"></mdl-textfield>
     <mdl-textfield type="text" label="Longitude" [(ngModel)]="target_longitude" floating-label autofocus disabled="true"></mdl-textfield>

@@ -1,4 +1,4 @@
-import {AngularFire, FirebaseListObservable} from 'angularfire2';
+import {AngularFire, FirebaseApp, FirebaseListObservable} from 'angularfire2';
 import {googleMapsService} from './googleMaps.service';
 import { Overlay } from 'angular2-modal';
 import {ModalComponent} from './Modal/modal.component';
@@ -8,6 +8,7 @@ import { MdlDialogService,
 import {
   Component,
   OnInit,
+  Inject ,
   ViewContainerRef 
 } from '@angular/core';
 
@@ -55,14 +56,15 @@ export class MapComponent extends OnInit {
     target_category: string;
     target_name: string;
     target_info: string;
-    target_img: string;
-    target_video: string;
+    target_img: any;
+    target_video: any;
     target_latitude: string;
     target_longitude: string;
     target_previewDistance: any;
+    storageRef: any;
 
 
-    constructor(modal: ModalComponent, af: AngularFire, private dialogService: MdlDialogService,
+    constructor(modal: ModalComponent, @Inject(FirebaseApp) firebaseApp: any, af: AngularFire, private dialogService: MdlDialogService,
     private snackbarService: MdlSnackbarService,private googleMapsService : googleMapsService){
         super();
         this.afs = af;
@@ -71,7 +73,8 @@ export class MapComponent extends OnInit {
         this.categories = af.database.list('/geopark_dev/config/Kategoriat');
         this.modal = modal; 
         this.new_targets = []; 
-    }
+        this.storageRef = firebaseApp.storage().ref();
+      }
 
  
 
@@ -150,8 +153,8 @@ export class MapComponent extends OnInit {
                 category :       this.target_category,
                 name :           this.target_name,
                 info:            this.target_info,
-                img:             this.target_img,
-                video:           this.target_video,
+                img:             "KUVA",
+                video:           "VIDEO",
                 previewDistance: this.target_previewDistance,
                 latitude:        this.TMP_currentMarkerLocation.lat(),
                 longitude:       this.TMP_currentMarkerLocation.lng()
@@ -159,7 +162,7 @@ export class MapComponent extends OnInit {
         );
 
         document.getElementById("closeBtn").click();
-        this.target_category = this.target_name = this.target_info = this.target_img = this.target_video = "";
+       // this.target_category = this.target_name = this.target_info = this.target_img = this.target_video = "";
         
         var marker = new google.maps.Marker({
           position: this.TMP_currentMarkerLocation,
@@ -174,6 +177,13 @@ export class MapComponent extends OnInit {
 
       //TODO
       //let exists = this.afs.database.list('/geopark_dev/Kohteet/Puut/paskaaon');
+      var file = document.getElementById('filetoUpload');
+
+
+      console.log( this.target_category);
+      console.log(this.target_img);
+
+          
 
       //this.afs.database.ref('/geopark_dev/Kohteet/puut/').set(this.new_targets);
 
@@ -183,7 +193,33 @@ export class MapComponent extends OnInit {
         delete this.new_targets[i].category; 
         let name = this.new_targets[i].name;
         delete this.new_targets[i].name;
-        lol.update(subFolder + name, this.new_targets[i]);
+        let targets = this.new_targets;
+        let ref =  this.storageRef;
+
+
+         this.storageRef.child(name+"_image").put(this.target_img).then(function(snapshot) {
+          
+           targets[i].img = snapshot.downloadURL;
+          
+ 
+         });
+
+        this.storageRef.child(name+"_vid").put(this.target_video).then(function(snapshot){
+          targets[i].video = snapshot.downloadURL;
+          console.log("SUB", subFolder);
+          console.log("name", name);
+          console.log(targets[i]);
+          lol.update(subFolder + name,targets[i]);
+          
+        });
+        
+
+
+        
+
+
+        
+
       }
        
       this.new_targets = [];
@@ -198,6 +234,23 @@ export class MapComponent extends OnInit {
         };       
         FR.readAsDataURL( event.target.files[0] );
       }
+    }
+
+
+    onChange(event: EventTarget) {
+        let eventObj: MSInputMethodContext = <MSInputMethodContext> event;
+        let target: HTMLInputElement = <HTMLInputElement> eventObj.target;
+        let files: FileList = target.files;
+        this.target_img = files[0];
+        console.log(this.target_img);
+    }
+
+    onVideoChange(event: EventTarget) {
+        let eventObj: MSInputMethodContext = <MSInputMethodContext> event;
+        let target: HTMLInputElement = <HTMLInputElement> eventObj.target;
+        let files: FileList = target.files;
+        this.target_video = files[0];
+        console.log(this.target_video);
     }
 
     

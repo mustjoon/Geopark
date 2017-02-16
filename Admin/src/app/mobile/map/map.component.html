@@ -30,6 +30,7 @@
   <div class="mdl-dialog__content">
     <mdl-textfield type="text" label="Nimi" [(ngModel)]="nimi" floating-label autofocus></mdl-textfield>
     <mdl-textfield type="text" label="Info" [(ngModel)]="info" floating-label autofocus></mdl-textfield>
+     <input type="file" [(ngModel)]="image" name="fileToUpload" id="fileToUpload">
   </div>
   <div class="mdl-dialog__actions">
     <button mdl-button (click)="saveUser()" mdl-button-type="raised" mdl-colored="primary" mdl-ripple>Save</button>
