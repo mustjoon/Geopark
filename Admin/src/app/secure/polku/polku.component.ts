@@ -33,6 +33,7 @@ export class PolkuComponent extends OnInit {
   
     // GET DATA FROM FIREBASE
     spots: FirebaseListObservable<any[]>; 
+    allSpotsLink: FirebaseListObservable<any[]>; 
     categories: FirebaseListObservable<any[]>; 
 
     spotList: any[];
@@ -40,6 +41,7 @@ export class PolkuComponent extends OnInit {
     existingSpotMarkers: any[]; // names of all visible markers (to prevent duplicates)
 
     tmpSpots: any[];
+    allSpots: any[];
     activeCategory: any;
 
     map: any;
@@ -55,27 +57,58 @@ export class PolkuComponent extends OnInit {
         this.afs = af;
 
         this.spotList = [];
-        this.categories = af.database.list('/geopark_dev/config/Kategoriat');
+        this.allSpotsLink = af.database.list('/geopark_dev/Kohteet');
     }
 
  
     public ngOnInit() { 
-       var mapProp = {
-              center: new google.maps.LatLng(51.508742, -0.120850),
-              zoom: 5,
-              mapTypeId: google.maps.MapTypeId.ROADMAP
-          };
+        var mapProp = {
+            center: new google.maps.LatLng(51.508742, -0.120850),
+            zoom: 5,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
 
-         this.map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
-         let map = this.map;
-       
-         let SLPLayer = this.googleMapsService.getSLPlayer(map);
-         this.map.overlayMapTypes.push(SLPLayer);
-     
-          let temp = this;
-          map.addListener("click", function(e){
-            //temp.addMarker(e.latLng);
-          });
+        this.map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+        let map = this.map;
+
+        let SLPLayer = this.googleMapsService.getSLPlayer(map);
+        this.map.overlayMapTypes.push(SLPLayer);
+        this.allSpots = [];
+        let allSpots = this.allSpots;
+
+        this.allSpotsLink.subscribe(_content => {
+
+            _content.map(function(_categories)
+            {
+                for(var key in _categories)
+                {
+                    if(_categories[key].latitude == undefined)
+                    {
+                        console.log("Olet tuntematon");
+                    }
+                    else
+                    {
+                        allSpots.push(_categories[key]);
+
+                        var infowindow = new google.maps.InfoWindow({
+                            content: _categories[key].info,
+                            maxWidth: 150
+                        });
+
+                        var marker = new google.maps.Marker({
+                            position: new google.maps.LatLng(_categories[key].latitude, _categories[key].longitude),
+                            map: map,
+                            title: 'Hello World!'
+                        });
+
+                        marker.addListener('click', function() {
+                            infowindow.open(map, marker);
+                        });
+                    }
+                }
+            });
+
+        });
     }
 
     public CategoryChange()
