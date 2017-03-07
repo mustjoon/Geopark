@@ -192,11 +192,6 @@ export class MapComponent extends OnInit {
         let test = this.wholedatabase;
         let databaseref = this.afs.database.list('/geopark_dev/Kohteet/'+subFolder);
        
-
-          
-         
-        
-
          if(this.target_video) {
             this.storageRef.child(name+"_image").put(this.target_img).then(function(snapshot) {    
              targets[i].img = snapshot.downloadURL;
@@ -212,16 +207,6 @@ export class MapComponent extends OnInit {
              databaseref.push(targets[i]);
             });
          }
-
-       
-        
-
-
-        
-
-
-        
-
       }
        
       this.new_targets = [];
