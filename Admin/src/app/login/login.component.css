@@ -35,7 +35,7 @@ min-height:670px;
 
 position:relative;
 
-background:url(http://niisku.lamk.fi/~tuomaxel/wwwmultimedia/bg.jpg)
+background:url("http://niisku.lamk.fi/~tuomaxel/wwwmultimedia/bg.jpg")
 no-repeat center;
 
 box-shadow:0 12px 15px 0 rgba(0,0,0,.24),0 17px 50px 0 rgba(0,0,0,.19);
@@ -129,6 +129,10 @@ border-color:#00b3b3;
 
 min-height:345px;
 
+max-width:90%;
+
+margin-left:auto;
+margin-right:auto;
 position:relative;
 
 -webkit-perspective:1000px;
