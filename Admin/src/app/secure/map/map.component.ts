@@ -50,7 +50,7 @@ export class MapComponent extends OnInit {
     TMP_currentMarkerLocation: any; // Tmp save clicked location here and wait for confirm
     new_targets : any[]; // Stores data for all the new location, this is pushed to Firebase once 'Save' is pushed
     afs: any;
-
+    wholedatabase: any;
 
     // FORM DATA
     target_category: string;
@@ -74,6 +74,7 @@ export class MapComponent extends OnInit {
         this.modal = modal; 
         this.new_targets = []; 
         this.storageRef = firebaseApp.storage().ref();
+        this.wholedatabase = firebaseApp.database().ref();
       }
 
  
@@ -174,44 +175,45 @@ export class MapComponent extends OnInit {
     {
       //let lol = this.afs.database.list('/geopark_dev/Kohteet/Puut/');
       let lol = this.afs.database.list('/geopark_dev/Kohteet/');
-
+    
       //TODO
       //let exists = this.afs.database.list('/geopark_dev/Kohteet/Puut/paskaaon');
       var file = document.getElementById('filetoUpload');
-
-
-      console.log( this.target_category);
-      console.log(this.target_img);
-
-          
-
       //this.afs.database.ref('/geopark_dev/Kohteet/puut/').set(this.new_targets);
 
       for(let i=0; i<this.new_targets.length; i++)
       {
         let subFolder = this.new_targets[i].category + "/";
+    
         delete this.new_targets[i].category; 
         let name = this.new_targets[i].name;
-        delete this.new_targets[i].name;
         let targets = this.new_targets;
         let ref =  this.storageRef;
+        let test = this.wholedatabase;
+        let databaseref = this.afs.database.list('/geopark_dev/Kohteet/'+subFolder);
+       
 
+          
+         
+        
 
-         this.storageRef.child(name+"_image").put(this.target_img).then(function(snapshot) {
-          
-           targets[i].img = snapshot.downloadURL;
-          
- 
-         });
+         if(this.target_video) {
+            this.storageRef.child(name+"_image").put(this.target_img).then(function(snapshot) {    
+             targets[i].img = snapshot.downloadURL;
+            });
+            this.storageRef.child(name+"_vid").put(this.target_video).then(function(snapshot){
+               targets[i].video = snapshot.downloadURL;
+               databaseref.push(targets[i]);
+            });
+         }
+         else {
+           this.storageRef.child(name+"_image").put(this.target_img).then(function(snapshot) {    
+             targets[i].img = snapshot.downloadURL;
+             databaseref.push(targets[i]);
+            });
+         }
 
-        this.storageRef.child(name+"_vid").put(this.target_video).then(function(snapshot){
-          targets[i].video = snapshot.downloadURL;
-          console.log("SUB", subFolder);
-          console.log("name", name);
-          console.log(targets[i]);
-          lol.update(subFolder + name,targets[i]);
-          
-        });
+       
         
 
 
