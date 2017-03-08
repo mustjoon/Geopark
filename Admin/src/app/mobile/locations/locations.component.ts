@@ -1,5 +1,5 @@
 import {AngularFire, FirebaseListObservable} from 'angularfire2';
-
+import {ActivatedRoute} from "@angular/router";
 
 import { MdlDialogService,
   MdlDialogReference,MdlSnackbarService,IOpenCloseRect } from 'angular2-mdl';
@@ -31,13 +31,17 @@ export class LocationsComponent extends OnInit {
  
   
     locations: FirebaseListObservable<any[]>;
+     id:any;
    
 
 
-    constructor(af: AngularFire){
+    constructor(af: AngularFire,private _routeParams: ActivatedRoute){
      super();
      this.locations = af.database.list('geopark_dev/Kohteet');
-     console.log(this.locations);
+     this._routeParams.params.subscribe(params => {
+        this.id = params['id'];   
+    });
+    // console.log(this.locations);
     }
 
       
