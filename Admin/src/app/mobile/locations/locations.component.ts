@@ -85,30 +85,59 @@ export class LocationsComponent extends OnInit {
         let SLPLayer = this.googleMapsService.getSLPlayer(map);
         this.map.overlayMapTypes.push(SLPLayer);
 
-
+        var afs = this.afs;
         this.locations.subscribe(_category => {
-            
+
+
+             var afs = this.afs; 
+             console.log("1",afs);           
             _category.map(function(_allRoutesOfCategory)
             {
-                _allRoutesOfCategory.map(function(_route) 
-                {
+             // var afs = this.afs;
+               console.log("2",afs);  
+              console.log("all routes",_allRoutesOfCategory);
+
+               
                     // luodaan taulu reitin pisteille
                     let markers = [];
-                    _route.Pisteet.map(function(_point)
+                    _allRoutesOfCategory.Pisteet.map(function(_point)
                     {
-                        let data = this.af.database.list('/geopark_dev/Kohteet/' + _point.category + "/" + _point.id + "/");
+                     // var afs = this.afs;
+                       console.log("3",afs);  
+                      console.log("test",_point);
+                        let emt = afs.database.list('/geopark_dev/Kohteet/' + _point.category + "/" + _point.id + "/");
+                        console.log('/geopark_dev/Kohteet/' + _point.category + "/" + _point.id + "/");
+                        emt.subscribe(_dat => {
 
-                        this.locations.subscribe(_dat => {
+                          var long = _dat.filter(function(asd){
+                            return asd.$key == 'longitude';
+                          })
+
+                           var lat = _dat.filter(function(asd){
+                            return asd.$key == 'latitude';
+                          })
+                           console.log(lat[0]);
+                           console.log("lat",lat[0].$value ,"long",long[0].$value);
+
+                           
                           var marker = new google.maps.Marker({
-                            position: new google.maps.LatLng(_dat.latitude ,_dat.longitude);
+                            map: map,
+                            position: new google.maps.LatLng(lat[0].$value ,long[0].$value)
                           });
 
                           markers.push(marker);
                         });
-                    });
-                    var markerCluster = new MarkerClusterer(map, markers,
+                         console.log("map",map);
+
+                   
+
+                    console.log(markers);
+                         var markerCluster = new MarkerClusterer(map, markers,
                         {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
-                });
+                    });
+                   
+                    
+               
             });
         });
     }
