@@ -2,6 +2,11 @@
     <!-- OTSIKKO -->
     <mdl-textfield type="text" label="Reitin nimi" [(ngModel)]="route_name" floating-label autofocus></mdl-textfield>
 
+  <label for="singleSelect"> Kategoriat: </label><br>
+    <select class="selectbox" [(ngModel)]="route_category" >
+    <option *ngFor="let c of categories  | async" value="{{c.$value}}" >{{c.$value}}</option>
+  </select>
+  
     <!-- INFO -->
     <div class="mdl-card__supporting-text">
       <div class="mdl-textfield mdl-js-textfield">

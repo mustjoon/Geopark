@@ -50,7 +50,9 @@ export class PolkuComponent extends OnInit {
     afs: any;
 
     route_name: any;
+    route_category: any;
     route_info: any;
+
 
     currentlySelectedSpotData: any[];
 
@@ -64,6 +66,7 @@ export class PolkuComponent extends OnInit {
         this.route = [];
 
         this.allSpotsLink = af.database.list('/geopark_dev/Kohteet');
+        this.categories = af.database.list('/geopark_dev/config/Reitit_Kategoriat');
     }
 
  
@@ -128,7 +131,7 @@ export class PolkuComponent extends OnInit {
                             name: _categories[key].name,
                             img: _categories[key].img,
                             info: _categories[key].info,
-                            position: new google.maps.LatLng(_categories[key].latitude, _categories[key].longitude),
+                            position: new google.maps.LatLng(_categories[key].latitude, _categories[key].longitude)
                         });
 
                         let infowindow = new google.maps.InfoWindow({
@@ -207,8 +210,8 @@ export class PolkuComponent extends OnInit {
 
     public SaveRoute()
     {
-          this.afs.database.list("/geopark_dev/Reitit/").
-          update(this.route_name+"/" ,{Pisteet: this.route, Nimi: this.route_name, Kategoria: "Pyöräily",Info: this.route_info});
+          this.afs.database.list("/geopark_dev/Reitit/" + this.route_category + "/").
+          update(this.route_name+"/" ,{Pisteet: this.route, Nimi: this.route_name, Info: this.route_info});
         
       //  this.afs.database.list("/geopark_dev/Reitit/Lahden Vesistö").update("/Pisteet",this.route);
     }
