@@ -127,13 +127,14 @@ export class PolkuComponent extends OnInit {
                             category: _categories.$key,
                             name: _categories[key].name,
                             img: _categories[key].img,
+                            info: _categories[key].info,
                             position: new google.maps.LatLng(_categories[key].latitude, _categories[key].longitude),
                         });
 
                         let infowindow = new google.maps.InfoWindow({
                             content:'<div id="infowindow"  class="demo-card-wide mdl-card mdl-shadow--2dp">'+
                                     '<div style="height: 176px; background: url('+_categories[key].img+') center / cover"  class="mdl-card__title">'+
-                                    '<h2 style="background-color:white;" id="infowindow_title" class="mdl-card__title-text">'+ key +'</h2>'+
+                                    '<h2 style="background-color:white;" id="infowindow_title" class="mdl-card__title-text">'+ _categories[key].name +'</h2>'+
                                     '</div>'+
                                     '<div id="infowindow_text" class="mdl-card__supporting-text">'+  _categories[key].info + '</div>'+
                                     '<div id="btn_addToRoute" class="mdl-card__actions mdl-card--border">'+
@@ -153,9 +154,10 @@ export class PolkuComponent extends OnInit {
                             let category = this.category;
                             let name = this.name;
                             let img = this.img;
+                            let info = this.info;
 
                             document.getElementById('btn_addToRoute').onclick = function(){
-                                let kusi = AddSpotToRoute(route, id, category, name, img);
+                                let kusi = AddSpotToRoute(route, id, category, name, img, info);
                                 infowindow.close();
                                 zone.run(() => route = kusi);
                             }
@@ -194,10 +196,10 @@ export class PolkuComponent extends OnInit {
 
     }
 
-    public AddSpotToRoute(_route, _id, _category, _name, _img)
+    public AddSpotToRoute(_route, _id, _category, _name, _img, _info)
     {
         _route.push(
-            {id: _id, category: _category, name: _name, img: _img}
+            {id: _id, category: _category, name: _name, img: _img, info: _info}
         );
 
         return _route;
