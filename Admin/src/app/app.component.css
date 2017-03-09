@@ -38,3 +38,7 @@ select#selectbox-color {
    border-radius: 20px;
    padding-left: 15px;
 }
+
+.material-icons {
+  background-color: blue;
+}

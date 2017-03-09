@@ -1,49 +1,5 @@
-<div id="googleMap" style="width:100vw;height:80vw;"></div>
-  
-<!--<ul>
-    <li class="text" *ngFor="let item of items | async">
-        {{item.$key}} {{item.info}}  {{item.lat}}  {{item.lng}}
+<ul>
+    <li *ngFor="let location of categories | async">
+        <a  [routerLink]=" ['location/'+location.$key] " >{{ location.$key }}</a>
     </li>
-</ul>-->
-
-<div> {{ guideTxt }} </div>
-<!-- Colored raised button -->
-<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" (click)="UusiKohde('Lisää uusi kohde.')">
-  Aloita uusi reitti
-</button>
-
-
-<button style="display:none" id="open" #editUserButton mdl-button mdl-button-type="raised" mdl-colored="primary"
-        mdl-ripple (click)="editUserDialog.show()">Edit User Dialog</button>
-
-<mdl-dialog #editUserDialog
-            [mdl-dialog-config]="{
-              clickOutsideToClose: true,
-              styles:{'width': '300px'},
-              isModal:true,
-              openFrom: editUserButton,
-              enterTransitionDuration: 400,
-              leaveTransitionDuration: 400}"
-            (show)="onDialogShow(dialogRef)"
-            (hide)="onDialogHide()">
-  <h3 class="mdl-dialog__title">Anna pisteen tiedot</h3>
-  <div class="mdl-dialog__content">
-    <mdl-textfield type="text" label="Nimi" [(ngModel)]="nimi" floating-label autofocus></mdl-textfield>
-    <mdl-textfield type="text" label="Info" [(ngModel)]="info" floating-label autofocus></mdl-textfield>
-     <input type="file" [(ngModel)]="image" name="fileToUpload" id="fileToUpload">
-  </div>
-  <div class="mdl-dialog__actions">
-    <button mdl-button (click)="saveUser()" mdl-button-type="raised" mdl-colored="primary" mdl-ripple>Save</button>
-    <button mdl-button (click)="editUserDialog.close()" mdl-ripple>Cancel</button>
-  </div>
-</mdl-dialog>
-
-
-
-
-
-
-
-
-
-
+   </ul> 

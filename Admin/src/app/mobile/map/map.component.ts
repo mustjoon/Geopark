@@ -31,42 +31,21 @@ import {
 export class MapComponent extends OnInit {
  
   
-    items: FirebaseListObservable<any[]>;
-    map: any;
-    waitingForPoint : boolean = false;
-    guideText : string;
-    markers : any[];
-    modal: any;
-    kuva: any;
-    test: any;
-    dialog: MdlDialogReference;
+   
+    categories: FirebaseListObservable<any[]>;
 
 
     constructor(modal: ModalComponent,af: AngularFire, private dialogService: MdlDialogService,
     private snackbarService: MdlSnackbarService,private googleMapsService : googleMapsService){
         super();
-        this.items = af.database.list('/Kohteet');
-        this.modal = modal;  
+       
+        this.categories = af.database.list('/geopark_dev/config/Kategoriat');
+        
     }
 
       
     public ngOnInit() { 
-       var mapProp = {
-              center: new google.maps.LatLng(51.508742, -0.120850),
-              zoom: 5,
-              mapTypeId: google.maps.MapTypeId.ROADMAP
-          };
-
-         this.map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
-         let map = this.map;
-       
-         let SLPLayer = this.googleMapsService.getSLPlayer(map);
-         this.map.overlayMapTypes.push(SLPLayer);
-     
-          let temp = this;
-          map.addListener("click", function(e){
-            temp.addMarker(e.latLng);
-          }); 
+      
     }
 
     public onDialogShow(){
@@ -84,40 +63,9 @@ export class MapComponent extends OnInit {
 
     }
 
-    public addMarker(location) {
-      if(this.waitingForPoint == true){
-        document.getElementById("open").click();
-        var marker = new google.maps.Marker({
-          position: location,
-          map: this.map
-        });
-        console.log(this.modal);
-        this.modal.onDialogShow();
-        this.markers.push(marker);
-      
-      }
-    }
+   
 
-    public readFile(event) {
-      let kuva = this.kuva; 
-      if (event.target.files && event.target.files[0]) {
-        var FR= new FileReader();
-        FR.onload = function(e:any) {
-          kuva = e.target.result;
-        };       
-        FR.readAsDataURL( event.target.files[0] );
-      }
-    }
-
-    
-
-    public UusiKohde(text){
-     // this.showDialog();
-
-      this.guideText = text;
-      this.waitingForPoint = true;
-
-    }
+   
 
 
 }

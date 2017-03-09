@@ -60,22 +60,26 @@ export class LocationsComponent extends OnInit {
 
         // Try HTML5 geolocation.
         if (navigator.geolocation) {
+         // console.log(navigator)
           navigator.geolocation.getCurrentPosition(function(position) {
+           
             var pos = {
               lat: position.coords.latitude,
               lng: position.coords.longitude
             };
-
+            console.log("pos",pos);
             map.setCenter(pos);
           });
         } else {
           // Browser doesn't support Geolocation
+
             var infoWindow = new google.maps.InfoWindow({map: map});
             handleLocationError(false, infoWindow, map.getCenter());
         }
       
 
         function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+          console.log("error",pos);
           infoWindow.setPosition(pos);
           infoWindow.setContent(browserHasGeolocation ?
                                 'Error: The Geolocation service failed.' :
@@ -94,8 +98,8 @@ export class LocationsComponent extends OnInit {
             _category.map(function(_allRoutesOfCategory)
             {
              // var afs = this.afs;
-               console.log("2",afs);  
-              console.log("all routes",_allRoutesOfCategory);
+            //   console.log("2",afs);  
+           //   console.log("all routes",_allRoutesOfCategory);
 
                
                     // luodaan taulu reitin pisteille
@@ -116,8 +120,8 @@ export class LocationsComponent extends OnInit {
                            var lat = _dat.filter(function(asd){
                             return asd.$key == 'latitude';
                           })
-                           console.log(lat[0]);
-                           console.log("lat",lat[0].$value ,"long",long[0].$value);
+                         //  console.log(lat[0]);
+                         //  console.log("lat",lat[0].$value ,"long",long[0].$value);
 
                            
                           var marker = new google.maps.Marker({
@@ -127,7 +131,7 @@ export class LocationsComponent extends OnInit {
 
                           markers.push(marker);
                         });
-                         console.log("map",map);
+                     //    console.log("map",map);
 
                    
 

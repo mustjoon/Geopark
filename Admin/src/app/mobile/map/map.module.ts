@@ -8,7 +8,7 @@ import { MapComponent } from './map.component';
 import { MdlModule } from 'angular2-mdl';
 import {ModalComponent} from './Modal/modal.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-
+import { routes } from './map.routes';
 
 console.log('`Barrel` bundle loaded asynchronously');
 
@@ -22,18 +22,22 @@ console.log('`Barrel` bundle loaded asynchronously');
   imports: [
     CommonModule,
     FormsModule,
+    RouterModule.forChild(routes),
     MdlModule,
     NgbModule,
     ReactiveFormsModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyB9ZP_cBqTRe2cMhbqKqWCPBnbBoflO4Cc'
-    })
+    }),
+
   ],
   entryComponents : [
   ModalComponent
   ],
   exports : [
-  MapComponent]
+  MapComponent,
+  RouterModule
+  ]
  
 })
 export class MapModule {
