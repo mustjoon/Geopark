@@ -1,18 +1,15 @@
   <div class="demo-card-wide mdl-card mdl-shadow--2dp" style="width:25vw;height:90vh;float: left;">
     <!-- OTSIKKO -->
-    <mdl-textfield type="text" label="Reitin nimi" [(ngModel)]="route_name" floating-label autofocus></mdl-textfield>
+    <mdl-textfield id="route_name" type="text" label="Reitin nimi" [(ngModel)]="route_name" floating-label autofocus></mdl-textfield>
 
-  <label for="singleSelect"> Kategoriat: </label><br>
-    <select class="selectbox" [(ngModel)]="route_category" >
+  <label id="label_category" for="singleSelect"> Kategoriat: </label>
+    <select id="select_category" class="selectbox" [(ngModel)]="route_category" >
     <option *ngFor="let c of categories  | async" value="{{c.$value}}" >{{c.$value}}</option>
   </select>
   
     <!-- INFO -->
-    <div class="mdl-card__supporting-text">
-      <div class="mdl-textfield mdl-js-textfield">
-        <textarea class="mdl-textfield__input"  [(ngModel)]="route_info" type="text" rows= "1" id="sample5" placeholder="Info (valinnainen)"></textarea>
-      </div>
-    </div>
+    <mdl-textfield rows="10" id="mdl-textfield__input" [(ngModel)]="route_info" type="text" label="Info (valinnainen)" floating-label autofocus>
+    </mdl-textfield>
 
     <!-- VALITUT KOHTEET JA POISTO NAPIT -->
     <ul class="demo-list-three mdl-list" style="height:50vh;overflow-y:scroll;">
@@ -28,8 +25,8 @@
         {{r.info}}
         </span>
       </span>
-      <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" (click)="RemoveSpotFromRoute(i)" style="width:20px !important;height:20px !important;">
-        <i class="material-icons">remove</i>
+      <button class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored" (click)="RemoveSpotFromRoute(i)">
+        <i id="remove" class="material-icons">remove</i>
       </button>
       </li>
     </ul>
