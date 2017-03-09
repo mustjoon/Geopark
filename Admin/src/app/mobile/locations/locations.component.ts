@@ -34,14 +34,17 @@ export class LocationsComponent extends OnInit {
     routeName: any;
     map: any;
     afs: any;
-
+    user_pos: any;
+    user_icon: string;
 
     markers: any[];
+    markerData: any[];
 
     constructor(af: AngularFire, private _routeParams: ActivatedRoute, private googleMapsService : googleMapsService){
       super();
       this.afs = af;
       this.markers = [];
+      this.markerData = [];
       this._routeParams.params.subscribe(params => {
         this.id = params['id'];
         this.routeName = params['id2'];
@@ -49,6 +52,7 @@ export class LocationsComponent extends OnInit {
         this.locations = af.database.list('/geopark_dev/Reitit/' + this.id + "/" + this.routeName +"/");
         console.log(this.locations);
       });
+      this.user_icon = "../../assets/img/person_icon.png";
     }
 
       
@@ -62,6 +66,54 @@ export class LocationsComponent extends OnInit {
         this.map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
         let map = this.map;
 
+        this.user_pos = new google.maps.Marker({
+            position: {lat: 0, lng: 0},
+            map: map,
+            icon: this.user_icon
+        });
+
+        let getDistance = this.getDistance;
+        let user_pos = this.user_pos;
+        let markers = this.markers;
+        let markerData = this.markerData;
+        setInterval(function(){ 
+            if (navigator.geolocation) {
+              navigator.geolocation.getCurrentPosition(function(position) {
+
+                var pos = {
+                  lat: position.coords.latitude,
+                  lng: position.coords.longitude
+                };
+                map.setCenter(pos);
+
+                // looppaa tallennetut pisteet ja laske etaisyys
+                markers.map(function(val, index)
+                {
+                    let distance = getDistance(
+                        new google.maps.LatLng(pos), 
+                        new google.maps.LatLng(val)
+                    );
+
+                    if(distance < markerData[index].previewDist[0].$value)
+                    {
+                        console.log("Löysit minut!");
+                    }else
+                    {
+                        console.log("Olet liian kaukana.");
+
+                    }
+                });
+                
+                var gmPos = new google.maps.LatLng(pos);
+                user_pos.setPosition(gmPos);
+              });
+            } else {
+              // Browser doesn't support Geolocation
+
+                var infoWindow = new google.maps.InfoWindow({map: map});
+                handleLocationError(false, infoWindow, map.getCenter());
+            }
+        }, 3000);
         // Try HTML5 geolocation.
       //  console.log("BEFORE GEO");
       //  alert("OK");
@@ -101,6 +153,7 @@ export class LocationsComponent extends OnInit {
         })
 
         let testMarkers = this.markers;
+        let testMarkerData = this.markerData;
         this.locations.subscribe(_dat => {
 
              var afs = this.afs; 
@@ -115,7 +168,7 @@ export class LocationsComponent extends OnInit {
                
                 
                 let emt = afs.database.list('/geopark_dev/Kohteet/' + _point.category + "/" + _point.id + "/");
-                console.log('/geopark_dev/Kohteet/' + _point.category + "/" + _point.id + "/");
+
                 emt.subscribe(_dat => {
 
                   var long = _dat.filter(function(asd){
@@ -126,6 +179,10 @@ export class LocationsComponent extends OnInit {
                     return asd.$key == 'latitude';
                   })
 
+                   var previewD = _dat.filter(function(asd){
+                    return asd.$key == 'previewDistance';
+                  })
+
                   var marker = new google.maps.Marker({
                     map: map,
                     position: new google.maps.LatLng(lat[0].$value ,long[0].$value)
@@ -133,7 +190,8 @@ export class LocationsComponent extends OnInit {
 
                   var path = {lat :lat[0].$value , lng: long[0].$value};
                   testMarkers.push(path);
-                  console.log(testMarkers);
+                  testMarkerData.push({previewDist: previewD});
+
                    var flightPath = new google.maps.Polyline({
                     path: testMarkers,
                     geodesic: true,
@@ -160,7 +218,21 @@ export class LocationsComponent extends OnInit {
 
     }
 
-   
+    public getDistance = function(p1, p2) {
+        var rad = function(x) {
+            return x * Math.PI / 180;
+        };
+
+        var R = 6378137; // Earth’s mean radius in meter
+        var dLat = rad(p2.lat() - p1.lat());
+        var dLong = rad(p2.lng() - p1.lng());
+        var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(rad(p1.lat())) * Math.cos(rad(p2.lat())) *
+        Math.sin(dLong / 2) * Math.sin(dLong / 2);
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        var d = R * c;
+        return d; // returns the distance in meter
+    };
 
 
 }
