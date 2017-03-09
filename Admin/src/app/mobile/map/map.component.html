@@ -1,5 +1,7 @@
+<h1>Kategoriat</h1>
+<br>
 <ul>
     <li *ngFor="let location of categories | async">
-        <a  [routerLink]=" ['location/'+location.$key] " >{{ location.$key }}</a>
+        <a  [routerLink]=" ['../location/'+location.$value] " >{{ location.$value }}</a>
     </li>
-   </ul> 
+</ul> 

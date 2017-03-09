@@ -19,9 +19,6 @@ import {
  * see https://github.com/gdi2290/es6-promise-loader for more info
  */
 
-
-
-
 @Component({
   selector: 'map',
   templateUrl: 'map.component.html',
@@ -30,16 +27,12 @@ import {
 })
 export class MapComponent extends OnInit {
  
-  
-   
     categories: FirebaseListObservable<any[]>;
 
-
-    constructor(modal: ModalComponent,af: AngularFire, private dialogService: MdlDialogService,
-    private snackbarService: MdlSnackbarService,private googleMapsService : googleMapsService){
+    constructor(af: AngularFire){
         super();
        
-        this.categories = af.database.list('/geopark_dev/config/Kategoriat');
+        this.categories = af.database.list('/geopark_dev/config/Reitit_Kategoriat');
         
     }
 
@@ -47,26 +40,6 @@ export class MapComponent extends OnInit {
     public ngOnInit() { 
       
     }
-
-    public onDialogShow(){
-
-    }
-
-    public onDialogHide(){
-
-    }
-
-   
-    
-
-    public closeDialog(){
-
-    }
-
-   
-
-   
-
 
 }
 

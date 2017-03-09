@@ -1,12 +1,7 @@
+<h1>Reitit</h1>
+<br>
 <ul>
-    <li *ngFor="let spot of spots | async">
-        {{spot.$key}}
-        {{spot.lat}}
-        {{spot.lng}}
+    <li *ngFor="let r of routes | async">
+        <a  [routerLink]=" [r.$key] " >{{ r.$key }}</a>
     </li>
-  </ul>
-
-
-
-  <div id="googleMap" style="width:500px;height:380px;"></div><br>
-  <div id="infooo" style="width: 500px;height: 150px;"></div>
+</ul> 

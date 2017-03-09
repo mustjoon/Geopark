@@ -29,105 +29,22 @@ import {
 })
 export class LocationComponent extends OnInit {
  
-  
-    spots: FirebaseListObservable<any[]>;
-    id:any;
-    map: any;
-    items: any[];
-    info: any[];
+    id: any;
+    routes: FirebaseListObservable<any[]>;
 
-
-    constructor(af: AngularFire,private _routeParams: ActivatedRoute){
-     super();
-       this._routeParams.params.subscribe(params => {
-        this.id = params['id'];   
-    });
-
-
-
-     this.spots = af.database.list('geopark_dev/Kohteet/'+this.id);
-
-    
-      
+    constructor(af: AngularFire, private _routeParams: ActivatedRoute){
+        super();
+        this._routeParams.params.subscribe(params => {
+          this.id = params['id'];   
+          console.log(this.id);
+          this.routes = af.database.list('/geopark_dev/Reitit/' + this.id + "/");
+          console.log(this.routes);
+        });
     }
 
-      
     public ngOnInit() { 
       
-       var mapProp = {
-              center: new google.maps.LatLng(51.508742, -0.120850),
-              zoom: 5,
-              mapTypeId: google.maps.MapTypeId.ROADMAP
-          };
-
-         this.map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
-         let map = this.map;
-
-         console.log(this.items);
-
-          this.spots.subscribe(x => {
-            console.log(map);
-            this.items = x;
-
-            let Points = [];
-
-            this.items.map(function(value){
-
-              console.log(value.info);
-              var infowindow = new google.maps.InfoWindow({
-              content: value.info
-              });
-
-             var marker = new google.maps.Marker({
-                position: new google.maps.LatLng(value.latitude, value.longitude),
-                map: map,
-                title: 'Hello World!'
-              });
-
-              marker.addListener('click', function() {
-            infowindow.open(map, marker);
-            document.getElementById("infooo").innerHTML = value.info;
-          });
-
-               var flightPlanCoordinates =
-          {lat: value.latitude, lng: value.longitude};
-          Points.push(flightPlanCoordinates);
-
-           })
-
-          var flightPath = new google.maps.Polyline({
-          path: Points,
-          geodesic: true,
-          strokeColor: '#FF0000',
-          strokeOpacity: 1.0,
-          strokeWeight: 2
-        });
-
-        flightPath.setMap(map);
-          });
-        
-         /*
-         this.items.map(function(x){
-           var marker = new google.maps.Marker({
-            position: [x.lat,x.lng],
-            map: map,
-            title: 'Hello World!'
-        });
-         })
-         */
-       
-        // let SLPLayer = this.googleMapsService.getSLPlayer(map);
-       //  this.map.overlayMapTypes.push(SLPLayer);
-     
-          let temp = this;
-          map.addListener("click", function(e){
-           // temp.addMarker(e.latLng);
-          });
-    
     }
-
-   
-
 
 }
 
