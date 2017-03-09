@@ -35,11 +35,13 @@ export class LocationsComponent extends OnInit {
     map: any;
     afs: any;
 
+
     markers: any[];
 
     constructor(af: AngularFire, private _routeParams: ActivatedRoute, private googleMapsService : googleMapsService){
       super();
       this.afs = af;
+      this.markers = [];
       this._routeParams.params.subscribe(params => {
         this.id = params['id'];
         this.routeName = params['id2'];
@@ -61,8 +63,12 @@ export class LocationsComponent extends OnInit {
         let map = this.map;
 
         // Try HTML5 geolocation.
+      //  console.log("BEFORE GEO");
+      //  alert("OK");
         if (navigator.geolocation) {
+         // console.log("NABIGATOR");
           navigator.geolocation.getCurrentPosition(function(position) {
+            console.log("nav2", position);
            
             var pos = {
               lat: position.coords.latitude,
@@ -90,14 +96,23 @@ export class LocationsComponent extends OnInit {
         this.map.overlayMapTypes.push(SLPLayer);
 
         var afs = this.afs;
+        this.locations.map(function(value){
+          console.log("value",value);
+        })
+
+        let testMarkers = this.markers;
         this.locations.subscribe(_dat => {
 
              var afs = this.afs; 
 
-            _dat[0].Pisteet.map(function(_point)
+             var test = _dat.filter(function(value){
+                return value.constructor === Array && value['$key'] == 'Pisteet'; 
+             })
+            
+            test[0].map(function(_point)
             {
                 // luodaan taulu reitin pisteille
-                let markers = [];
+               
                 
                 let emt = afs.database.list('/geopark_dev/Kohteet/' + _point.category + "/" + _point.id + "/");
                 console.log('/geopark_dev/Kohteet/' + _point.category + "/" + _point.id + "/");
@@ -116,14 +131,33 @@ export class LocationsComponent extends OnInit {
                     position: new google.maps.LatLng(lat[0].$value ,long[0].$value)
                   });
 
-                  markers.push(marker);
+                  var path = {lat :lat[0].$value , lng: long[0].$value};
+                  testMarkers.push(path);
+                  console.log(testMarkers);
+                   var flightPath = new google.maps.Polyline({
+                    path: testMarkers,
+                    geodesic: true,
+                    strokeColor: '#FF0000',
+                    strokeOpacity: 1.0,
+                    strokeWeight: 2
+              })
+           
+            flightPath.setMap(map);
                 });
 
-                var markerCluster = new MarkerClusterer(map, markers,
+              
+
+                var markerCluster = new MarkerClusterer(map, testMarkers,
                 {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
+                   
+          
+           
+                
           
             });
+           
         });
+
     }
 
    
