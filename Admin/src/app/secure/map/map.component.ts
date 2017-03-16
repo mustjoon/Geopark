@@ -1,5 +1,6 @@
 import {AngularFire, FirebaseApp, FirebaseListObservable} from 'angularfire2';
 import {googleMapsService} from './googleMaps.service';
+import {googleMapsServiceFinal} from '../../googleMapsService';
 import { Overlay } from 'angular2-modal';
 import {ModalComponent} from './Modal/modal.component';
 
@@ -28,7 +29,7 @@ import {
   selector: 'map',
   templateUrl: 'map.component.html',
   styleUrls: ['map.component.css'],
-  providers: [ModalComponent,googleMapsService]
+  providers: [ModalComponent,googleMapsService,googleMapsServiceFinal]
 })
 export class MapComponent extends OnInit {
  
@@ -65,7 +66,8 @@ export class MapComponent extends OnInit {
 
 
     constructor(modal: ModalComponent, @Inject(FirebaseApp) firebaseApp: any, af: AngularFire, private dialogService: MdlDialogService,
-    private snackbarService: MdlSnackbarService,private googleMapsService : googleMapsService){
+    private snackbarService: MdlSnackbarService,private googleMapsService : googleMapsService,
+    private gMapsServ : googleMapsServiceFinal){
         super();
         this.afs = af;
         this.items = af.database.list('/geopark_dev/');
@@ -80,7 +82,8 @@ export class MapComponent extends OnInit {
  
 
       
-    public ngOnInit() { 
+    public ngOnInit() {
+
        var mapProp = {
               center: new google.maps.LatLng(51.508742, -0.120850),
               zoom: 5,
@@ -89,16 +92,10 @@ export class MapComponent extends OnInit {
 
          this.map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
          let map = this.map;
-       
-         let SLPLayer = this.googleMapsService.getSLPlayer(map);
+         let SLPLayer = this.gMapsServ.getSLPlayer(map);
          this.map.overlayMapTypes.push(SLPLayer);
-     
-          let temp = this;
-          map.addListener("click", function(e){
-            temp.addMarker(e.latLng);
-          });
-
-        this.config.subscribe(x => {
+         this.gMapsServ.addMarkerToMap(map,this);
+         this.config.subscribe(x => {
             for(var i=0; i<x.length; i++)
             {
                 if(x[i].$key == "notifikaatio_etaisyys")
@@ -125,11 +122,7 @@ export class MapComponent extends OnInit {
     public addMarker(location) {
       // Jos "Tee uusi kohde"-nappia painettu
       if(this.waitingForPoint == true){
-          
         document.getElementById("open").click();
-        
-        
-        console.log(this.modal);
         this.modal.onDialogShow();
         // this.markers.push(marker);
         this.TMP_currentMarkerLocation = location;
@@ -163,8 +156,6 @@ export class MapComponent extends OnInit {
         );
 
         document.getElementById("closeBtn").click();
-       // this.target_category = this.target_name = this.target_info = this.target_img = this.target_video = "";
-        
         var marker = new google.maps.Marker({
           position: this.TMP_currentMarkerLocation,
           map: this.map
