@@ -7,9 +7,10 @@ import { routes } from './mobile.routes';
 import { MobileComponent } from './mobile.component';
 import { LocationsComponent } from './locations/locations.component';
 import { LocationComponent } from './location/location.component';
+import { KohdepisteComponent } from './kohdepiste/kohdepiste.component';
 import { MapModule } from './map/map.module';
 import { MdlModule } from 'angular2-mdl';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -19,8 +20,9 @@ console.log('`Barrel` bundle loaded asynchronously');
   declarations: [
     // Components / Directives/ Pipes
     MobileComponent,
-   LocationsComponent,
-   LocationComponent
+    LocationsComponent,
+    LocationComponent,
+    KohdepisteComponent
   ],
   imports: [
     CommonModule,

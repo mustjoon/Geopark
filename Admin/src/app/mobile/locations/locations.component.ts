@@ -1,6 +1,7 @@
 import {AngularFire, FirebaseListObservable} from 'angularfire2';
 import {googleMapsService} from '../../secure/map/googleMaps.service';
 import {ActivatedRoute} from "@angular/router";
+import {Router} from '@angular/router';
 
 import { MdlDialogService,
   MdlDialogReference,MdlSnackbarService,IOpenCloseRect } from 'angular2-mdl';
@@ -36,15 +37,21 @@ export class LocationsComponent extends OnInit {
     afs: any;
     user_pos: any;
     user_icon: string;
+    marker_icon_locked : string;
+    marker_icon_tree : string;
 
     markers: any[];
     markerData: any[];
+    md : any[];
 
-    constructor(af: AngularFire, private _routeParams: ActivatedRoute, private googleMapsService : googleMapsService){
+    router: Router;
+
+    constructor(af: AngularFire, private _routeParams: ActivatedRoute, private googleMapsService : googleMapsService, _router: Router){
       super();
       this.afs = af;
       this.markers = [];
       this.markerData = [];
+      this.md = [];
       this._routeParams.params.subscribe(params => {
         this.id = params['id'];
         this.routeName = params['id2'];
@@ -53,6 +60,10 @@ export class LocationsComponent extends OnInit {
         console.log(this.locations);
       });
       this.user_icon = "../../assets/img/person_icon.png";
+      this.marker_icon_locked = "../../assets/img/marker_locked.png";
+      this.marker_icon_tree = "../../assets/img/marker_puu.png";
+
+      this.router = _router;
     }
 
       
@@ -76,6 +87,11 @@ export class LocationsComponent extends OnInit {
         let user_pos = this.user_pos;
         let markers = this.markers;
         let markerData = this.markerData;
+        let md = this.md;
+
+        let marker_icon_locked = this.marker_icon_locked;
+        let marker_icon_tree = this.marker_icon_tree;
+
         setInterval(function(){ 
             if (navigator.geolocation) {
               navigator.geolocation.getCurrentPosition(function(position) {
@@ -84,26 +100,23 @@ export class LocationsComponent extends OnInit {
                   lat: position.coords.latitude,
                   lng: position.coords.longitude
                 };
-                map.setCenter(pos);
 
-                // looppaa tallennetut pisteet ja laske etaisyys
-                markers.map(function(val, index)
-                {
+                md.map(function(val, index){
                     let distance = getDistance(
                         new google.maps.LatLng(pos), 
-                        new google.maps.LatLng(val)
+                        val.position
                     );
 
                     if(distance < markerData[index].previewDist[0].$value)
                     {
-                        console.log("Löysit minut!");
-                    }else
+                        val.setIcon(marker_icon_tree);
+                    }
+                    else
                     {
-                        console.log("Olet liian kaukana.");
-
+                        val.setIcon(marker_icon_locked);
                     }
                 });
-                
+
                 var gmPos = new google.maps.LatLng(pos);
                 user_pos.setPosition(gmPos);
               });
@@ -115,12 +128,8 @@ export class LocationsComponent extends OnInit {
             }
         }, 3000);
         // Try HTML5 geolocation.
-      //  console.log("BEFORE GEO");
-      //  alert("OK");
         if (navigator.geolocation) {
-         // console.log("NABIGATOR");
           navigator.geolocation.getCurrentPosition(function(position) {
-            console.log("nav2", position);
            
             var pos = {
               lat: position.coords.latitude,
@@ -154,6 +163,9 @@ export class LocationsComponent extends OnInit {
 
         let testMarkers = this.markers;
         let testMarkerData = this.markerData;
+
+        let router = this.router;
+        
         this.locations.subscribe(_dat => {
 
              var afs = this.afs; 
@@ -164,54 +176,51 @@ export class LocationsComponent extends OnInit {
             
             test[0].map(function(_point)
             {
-                // luodaan taulu reitin pisteille
-               
-                
                 let emt = afs.database.list('/geopark_dev/Kohteet/' + _point.category + "/" + _point.id + "/");
 
                 emt.subscribe(_dat => {
 
-                  var long = _dat.filter(function(asd){
-                    return asd.$key == 'longitude';
-                  })
+                    var long = _dat.filter(function(asd){
+                        return asd.$key == 'longitude';
+                    })
 
-                   var lat = _dat.filter(function(asd){
-                    return asd.$key == 'latitude';
-                  })
+                    var lat = _dat.filter(function(asd){
+                        return asd.$key == 'latitude';
+                    })
 
-                   var previewD = _dat.filter(function(asd){
-                    return asd.$key == 'previewDistance';
-                  })
+                    var previewD = _dat.filter(function(asd){
+                        return asd.$key == 'previewDistance';
+                    })
 
-                  var marker = new google.maps.Marker({
-                    map: map,
-                    position: new google.maps.LatLng(lat[0].$value ,long[0].$value)
-                  });
+                    var marker = new google.maps.Marker({
+                        map: map,
+                        position: new google.maps.LatLng(lat[0].$value ,long[0].$value)
+                    });
 
-                  var path = {lat :lat[0].$value , lng: long[0].$value};
-                  testMarkers.push(path);
-                  testMarkerData.push({previewDist: previewD});
+                    marker.addListener('click', function() {
+                      router.navigateByUrl('/mobile/kohdepiste/'+_point.category+"/"+_point.id);
+                    });
 
-                   var flightPath = new google.maps.Polyline({
-                    path: testMarkers,
-                    geodesic: true,
-                    strokeColor: '#FF0000',
-                    strokeOpacity: 1.0,
-                    strokeWeight: 2
-              })
-           
-            flightPath.setMap(map);
+                    md.push(marker);
+
+                    var path = {lat :lat[0].$value , lng: long[0].$value};
+                    testMarkers.push(path);
+                    testMarkerData.push({previewDist: previewD});
+
+                    var flightPath = new google.maps.Polyline({
+                        path: testMarkers,
+                        geodesic: true,
+                        strokeColor: '#FF0000',
+                        strokeOpacity: 1.0,
+                        strokeWeight: 2
+                    })
+
+                    flightPath.setMap(map);
                 });
-
-              
 
                 var markerCluster = new MarkerClusterer(map, testMarkers,
                 {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
                    
-          
-           
-                
-          
             });
            
         });

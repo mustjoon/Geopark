@@ -1,0 +1,25 @@
+<style>
+
+.kohdepiste-img-header
+{
+	background: center / cover;
+}
+
+</style>
+
+<div class="demo-card-wide mdl-card mdl-shadow--2dp" *ngFor="let k of kohde  | async">
+	  
+	  <!-- OTSIKKO KUVA -->
+	  <div class="kohdepiste-img-header">{{k.name}}</div>
+
+	  <!-- OTSIKKO 
+	  <div class="mdl-card__title" *ngIf="k.$key == 'name'">
+	    	<h2 class="mdl-card__title-text">{{k.$value}}</h2>
+	  </div>
+
+	   INFO 
+	  <div class="mdl-card__supporting-text" *ngIf="k.$key == 'info'">
+		    {{k.$value}}
+	  </div>-->
+
+</div>
