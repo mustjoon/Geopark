@@ -38,8 +38,10 @@ export class KohdepisteComponent extends OnInit {
             this.category = params['category'];   
             this.uid = params['uid'];   
 
-            this.kohde = af.database.list('/geopark_dev/Kohteet/' + this.category + "/", {query: {equalTo: this.uid}});
-            console.log(this.kohde);
+            this.kohde = af.database.list('/geopark_dev/Kohteet/' + this.category + "/",
+             {query: {orderByKey:true,equalTo: this.uid}});
+            console.log('/geopark_dev/Kohteet/' + this.category + "/");
+            console.log(this.uid);
         });
 
     }
