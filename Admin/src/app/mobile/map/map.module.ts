@@ -3,7 +3,7 @@ import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AgmCoreModule } from 'angular2-google-maps/core';
-import { routes } from './map.routes';
+
 import { MapComponent } from './map.component';
 import { MdlModule } from 'angular2-mdl';
 import {ModalComponent} from './Modal/modal.component';

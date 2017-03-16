@@ -145,7 +145,7 @@ export class PolkuComponent extends OnInit {
                                     'Lisää reittiin'+
                                     '</a>'+
                                     '</div>'+
-                                    '</div>';
+                                    '</div>'
                         });
 
                         marker.addListener('click', function() {
