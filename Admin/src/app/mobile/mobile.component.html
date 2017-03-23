@@ -15,13 +15,24 @@
   <div class="mdl-layout__drawer">
     <span class="mdl-layout-title">Title</span>
     <nav class="mdl-navigation">
+      <a class="mdl-navigation__link" [routerLink]=" ['./home'] " routerLinkActive="active">
+        Home
+      </a>
        <a class="mdl-navigation__link" [routerLink]=" ['.mobile/Category/Pyöräily'] " routerLinkActive="active">
         ddd
       </a>
       <a class="mdl-navigation__link" [routerLink]=" ['./mobile/Category/Kävely'] " routerLinkActive="active">
         aa
       </a>
-     
+     <a class="mdl-navigation__link" [routerLink]=" ['./settings'] " routerLinkActive="active">
+        Asetukset
+      </a>
+      <a class="mdl-navigation__link" [routerLink]=" ['./contact'] " routerLinkActive="active">
+        Ota yhteyttä
+      </a>
+      <a class="mdl-navigation__link" [routerLink]=" ['./logout'] " routerLinkActive="active">
+        Logout
+      </a>
     </nav>
   </div>
  <main style="margin-top:10%;" class="mdl-layout__content">

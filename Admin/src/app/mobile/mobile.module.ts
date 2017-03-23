@@ -8,6 +8,10 @@ import { MobileComponent } from './mobile.component';
 import { LocationsComponent } from './locations/locations.component';
 import { LocationComponent } from './location/location.component';
 import { KohdepisteComponent } from './kohdepiste/kohdepiste.component';
+import { HomeComponent } from './home/home.component';
+import { ContactComponent } from './contact/contact.component';
+import { SettingsComponent } from './settings/settings.component';
+import { LogoutComponent } from './logout/logout.component';
 import { MapModule } from './map/map.module';
 import { MdlModule } from 'angular2-mdl';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -22,7 +26,12 @@ console.log('`Barrel` bundle loaded asynchronously');
     MobileComponent,
     LocationsComponent,
     LocationComponent,
-    KohdepisteComponent
+    KohdepisteComponent,
+    HomeComponent,
+    ContactComponent,
+    SettingsComponent,
+    LogoutComponent
+
   ],
   imports: [
     CommonModule,

@@ -8,6 +8,8 @@ import { SecureComponent } from './secure.component';
 import { NoContentComponent } from './no-content/no-content.component';
 import { PolkuComponent } from './polku/polku.component';
 import { MapModule } from './map/map.module';
+import { Contact_InfoComponent } from './contact_info/contact_info.component';
+
 import { MdlModule } from 'angular2-mdl';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
@@ -20,7 +22,8 @@ console.log('`Barrel` bundle loaded asynchronously');
     // Components / Directives/ Pipes
     SecureComponent,
     NoContentComponent,
-    PolkuComponent
+    PolkuComponent,
+    Contact_InfoComponent
   ],
   imports: [
     CommonModule,
