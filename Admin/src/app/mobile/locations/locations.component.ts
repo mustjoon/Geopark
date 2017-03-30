@@ -205,8 +205,8 @@ export class LocationsComponent extends OnInit {
                bounds.extend(md[i].getPosition());
             }
             bounds.extend(user_pos.getPosition() );
-            map.fitBounds(bounds);
-            map.setCenter(bounds.getCenter());
+            //map.fitBounds(bounds);
+           // map.setCenter(bounds.getCenter());
         }) 
           }).subscribe(function(data){
             sub.unsubscribe();
