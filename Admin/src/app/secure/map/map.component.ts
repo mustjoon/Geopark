@@ -148,10 +148,11 @@ export class MapComponent extends OnInit {
                 name :           this.target_name,
                 info:            this.target_info,
                 img:             "KUVA",
-                video:           "VIDEO",
+                video:           this.target_video,
                 previewDistance: this.target_previewDistance,
                 latitude:        this.TMP_currentMarkerLocation.lat(),
                 longitude:       this.TMP_currentMarkerLocation.lng()
+
             }
         );
 
@@ -182,7 +183,7 @@ export class MapComponent extends OnInit {
         let ref =  this.storageRef;
         let test = this.wholedatabase;
         let databaseref = this.afs.database.list('/geopark_dev/Kohteet/'+subFolder);
-       
+       /*
          if(this.target_video) {
             this.storageRef.child(name+"_image").put(this.target_img).then(function(snapshot) {    
              targets[i].img = snapshot.downloadURL;
@@ -192,12 +193,13 @@ export class MapComponent extends OnInit {
                databaseref.push(targets[i]);
             });
          }
-         else {
+         */
+        
            this.storageRef.child(name+"_image").put(this.target_img).then(function(snapshot) {    
              targets[i].img = snapshot.downloadURL;
              databaseref.push(targets[i]);
             });
-         }
+         
       }
        
       this.new_targets = [];
@@ -222,7 +224,7 @@ export class MapComponent extends OnInit {
         this.target_img = files[0];
         console.log(this.target_img);
     }
-
+    /*
     onVideoChange(event: EventTarget) {
         let eventObj: MSInputMethodContext = <MSInputMethodContext> event;
         let target: HTMLInputElement = <HTMLInputElement> eventObj.target;
@@ -230,7 +232,7 @@ export class MapComponent extends OnInit {
         this.target_video = files[0];
         console.log(this.target_video);
     }
-
+  */
     
 
     public UusiKohde(text){

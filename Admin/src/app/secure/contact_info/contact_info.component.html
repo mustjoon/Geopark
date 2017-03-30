@@ -1,0 +1,10 @@
+<div class="contact_info">
+<h1>Kysymykset</h1>
+<ul>
+	<li *ngFor="let r of allComplains | async">
+        <h4  [routerLink]=" [r.$key] " >{{ r.Otsikko }}</h4>
+        <p  [routerLink]=" [r.$key] " >{{ r.Aika }}</p>
+        <p  [routerLink]=" [r.$key] " >{{ r.Sisalto }}</p>
+	</li>
+</ul>
+</div>

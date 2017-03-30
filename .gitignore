@@ -4,3 +4,4 @@ Admin/package.json
 *.json
 Admin/src/app/+barrel/barrel.component.html
 Admin/src/index.html
+Admin/functions/
