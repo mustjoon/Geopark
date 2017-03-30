@@ -46,7 +46,23 @@ export class LocationComponent extends OnInit {
         this.observables = [];
         this.afs = af;
         this.distances = [];
-        let pos = this.pos;
+        
+        this._routeParams.params.subscribe(params => {
+          this.id = params['id'];   
+         
+          console.log(this.id);
+          this.routes = af.database.list('/geopark_dev/Reitit/' + this.id + "/");
+        });
+    }
+
+    public ngOnInit() {
+      let getDistance = this.getDistance;
+      let observables = this.observables;
+      let id = this.id;
+      let afs = this.afs;
+      
+      let distances = this.distances;
+      let pos = this.pos;
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(function(position) {
             pos = {
@@ -60,53 +76,30 @@ export class LocationComponent extends OnInit {
         else {
           pos = {lat:0, lng:0};
         }
-        this._routeParams.params.subscribe(params => {
-          this.id = params['id'];   
-          this.distance = [];
-          console.log(this.id);
-          this.routes = af.database.list('/geopark_dev/Reitit/' + this.id + "/");
-        });
-    }
+      
 
-    public ngOnInit() {
-      let getDistance = this.getDistance;
-      let observables = this.observables;
-      let id = this.id;
-      let afs = this.afs;
-      let pos = this.pos;
-      let distances = this.distances;
      // let 
      let mySub = this.afs.database.list('/geopark_dev/Reitit/' + id + "/").map(function(data){
               data.map(function(route){
-                console.log(route);
-                console.log(route.Pisteet[0].lat);
                 let sub = afs.database.list('/geopark_dev/Kohteet/' + route.Pisteet[0].category+ "/",
                   {query: {orderByKey:true,equalTo: route.Pisteet[0].id}}).take(1);
-               console.log(route.Pisteet[0].id);
-               console.log('/geopark_dev/Kohteet/' + id+ "/");
                  observables.push(sub); 
               })
-          //  data => [observables,categories]
           }).finally(function(data){ 
-            console.log(observables);
             let suz =  observables.length ?  Observable.forkJoin(observables) : Observable.of([]);
                 suz.subscribe(data => {
                   data.map(function(data){
-                    console.log("paskaa on " ,data[0].longitude);
-                    console.log(pos);
                     let distance = getDistance(
                         new google.maps.LatLng(pos), 
                         new google.maps.LatLng({lat:data[0].latitude, lng: data[0].longitude})
-                    );
-                  console.log(distance);
-                  distances.push(distance);
-                  console.log(data,"asd");
-                  })
-                  
+                    );      
+                  distances.push(Math.round(distance/1000));
+                  })        
                 })
           }).subscribe(function(data){
             mySub.unsubscribe();
           })
+        
       
     }
     public getDistance = function(p1, p2) {

@@ -1,7 +1,7 @@
 <h1>Reitit</h1>
 <br>
 <ul>
-    <li *ngFor="let r of routes | async">
-        <a  [routerLink]=" [r.$key] " >{{ r.$key }}</a>
+    <li *ngFor="let r of routes | async; let i = index">
+        <a  [routerLink]=" [r.$key] " >{{ r.$key }} Etäisyys: {{distances[i]}}km</a>
     </li>
 </ul> 
