@@ -10,10 +10,13 @@ import {
   OnInit,
   ViewContainerRef 
 } from '@angular/core';
-
+import 'rxjs/add/operator/map'; // you might need to import this, or not depends on your setup
+import 'rxjs/add/operator/finally'; 
 import {
   AgmCoreModule
 } from 'angular2-google-maps/core';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/forkJoin';
 /*
  * We're loading this component asynchronously
  * We are using some magic with es6-promise-loader that will wrap the module with a Promise
@@ -39,7 +42,8 @@ export class LocationsComponent extends OnInit {
     user_icon: string;
     marker_icon_locked : string;
     marker_icon_tree : string;
-
+    observables : any[];
+    categories : any [];
     markers: any[];
     markerData: any[];
     md : any[];
@@ -52,6 +56,8 @@ export class LocationsComponent extends OnInit {
       this.markers = [];
       this.markerData = [];
       this.md = [];
+      this.observables = [];
+      this.categories = [];
       this._routeParams.params.subscribe(params => {
         this.id = params['id'];
         this.routeName = params['id2'];
@@ -135,39 +141,56 @@ export class LocationsComponent extends OnInit {
         var afs = this.afs;
        
         let MarkerData = this.markerData;
+        let bounds = new google.maps.LatLngBounds();
         let router = this.router;
-   
-        this.locations.subscribe(_dat => {
+        let observables = this.observables;
+        let categories = this.categories;
 
-             var afs = this.afs;
-            _dat[0].Pisteet.map(function(_point)
+       let sub = this.afs.database.list('/geopark_dev/Reitit/' + this.id + "/",
+          {query: {orderByKey:true,equalTo:this.routeName}})
+
+
+            //LISÄTÄÄN KAIKKI PISTEET OBSERVABLETAULUUN!!!
+           .map(function(data){
+            
+             data[0].Pisteet.map(function(_point)
             {
-                let kohde = afs.database.list('/geopark_dev/Kohteet/' + _point.category + "/",
-                  {query: {orderByKey:true,equalTo: _point.id}});
+                let sub2 = afs.database.list('/geopark_dev/Kohteet/' + _point.category + "/",
+                  {query: {orderByKey:true,equalTo: _point.id}}).take(1);
+                observables.push(sub2); 
+                categories.push(_point.category);      
+            });
 
-                kohde.subscribe(_dat => {
+            data => [observables,categories]
+          }).finally(function(data){ 
 
-                    var marker = new google.maps.Marker({
+          //KÄYDÄÄN OBSERVABLETAULU LÄPI FORKJOINILLA!
+         let suz =  observables.length ?  Observable.forkJoin(observables) : Observable.of([]);
+        suz.subscribe(data => {
+           //LISÄTÄÄN MARKKERIT JA MUUT HÄRPÄKKEET
+           data.map(function(_dat,index){
+             var marker = new google.maps.Marker({
                         map: map,
-                        position: new google.maps.LatLng(_dat[0].latitude ,_dat[0].longitude)
-                    });
-                    marker.locked = true;
-                    if(_dat[0].previewDistance ==0){
-                      marker.locked = false;
-                    }
+                        position: new google.maps.LatLng(
+                          _dat[0].latitude ,_dat[0].longitude)
+              });
+              marker.locked = true;
+              if(_dat[0].previewDistance ==0){
+                marker.locked = false;
+              }
+              marker.addListener('click', function() {
+                if(!this.locked)
+                    router.navigateByUrl('/mobile/kohdepiste/'+
+                    categories[index]+"/"+_dat[0].$key);
+                });
+              md.push(marker);
+              var path = {lat :_dat[0].latitude, 
+                         lng: _dat[0].longitude};
+              markers.push(path);
+              MarkerData.push({previewDist: _dat[0].previewDistance});
+           })  
 
-                    marker.addListener('click', function() {
-                      if(!this.locked)
-                      router.navigateByUrl('/mobile/kohdepiste/'+_point.category+"/"+_point.id);
-                    });
-
-                    md.push(marker);
-
-                    var path = {lat :_dat[0].latitude , lng: _dat[0].longitude};
-                    markers.push(path);
-                    MarkerData.push({previewDist: _dat[0].previewDistance});
-
-                    var flightPath = new google.maps.Polyline({
+           var flightPath = new google.maps.Polyline({
                         path: markers,
                         geodesic: true,
                         strokeColor: '#FF0000',
@@ -175,13 +198,19 @@ export class LocationsComponent extends OnInit {
                         strokeWeight: 2
                     })
 
-                    flightPath.setMap(map);
-                });
-                var markerCluster = new MarkerClusterer(map, markers,
-                {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});  
-            });
-        });
-
+            flightPath.setMap(map);
+            console.log(md.length);
+            for(var i =0;i<md.length;i++){
+              console.log(md[i])
+               bounds.extend(md[i].getPosition());
+            }
+            bounds.extend(user_pos.getPosition() );
+            map.fitBounds(bounds);
+            map.setCenter(bounds.getCenter());
+        }) 
+          }).subscribe(function(data){
+            sub.unsubscribe();
+          })
     }
 
     public getDistance = function(p1, p2) {
@@ -199,8 +228,6 @@ export class LocationsComponent extends OnInit {
         var d = R * c;
         return d; // returns the distance in meter
     };
-
-
 }
 
 

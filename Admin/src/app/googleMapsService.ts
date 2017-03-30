@@ -6,8 +6,9 @@ export class googleMapsServiceFinal {
   public initMap(){
     var mapProp = {
         center: new google.maps.LatLng(51.508742, -0.120850),
-        zoom: 7,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
+        zoom: 12,
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        minZoom: 12
     };
 
     let map = new google.maps.Map(document.getElementById("googleMap"), mapProp);

@@ -1,6 +1,9 @@
-<div> {{ (af.auth | async)?.uid }} </div>
+<div style="margin-top:10%;"> {{ (af.auth | async)?.uid }} </div>
 
 <div class="login-wrap">
+
+	<H1 style="text-align:center">Geopark</H1>
+
 	<div class="login-form">
 				
 		<div class="sign-in-htm">
@@ -28,7 +31,11 @@
 				<input type="button" (click)="emailLogin()" class="button" value="Sign In"/>					
 			</div>
 				
-			<br>	
+			<br>
+
+			<div class="group">
+			<div  (click)="login()" >Sign in using Google</div>
+			</div>	
 
 			<div class="foot-lnk">
 				<a href="#forgot">Forgotten Password?</a>		

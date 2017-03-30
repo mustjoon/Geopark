@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
     this.af.auth.login({
       provider: AuthProviders.Google,
       method: AuthMethods.Popup,
-    });
+    }).then(res=>  this.router.navigateByUrl('mobile/map'))
   }
   overrideLogin() {
     this.af.auth.login({
