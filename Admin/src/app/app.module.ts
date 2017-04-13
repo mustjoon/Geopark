@@ -7,10 +7,11 @@ import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
 import { MdlModule } from 'angular2-mdl';
 import { VexDemoModule } from './vex-demo/vex-demo.module';
 import { JSNativeDemoModule } from './js-native-demo/js-native-demo.module';
-
+import { ForgotComponent } from './forgot';
 
 import { AuthService } from './auth.service';
 import { CanActivateViaAuthGuard} from './CanActivateViaAuthGuard'
+import { CanActivateViaAuthGuardAdmin} from './CanActivateViaAuthGuardAdmin'
 
 import {
   NgModule,
@@ -40,6 +41,7 @@ import { AppState, InternalStateType } from './app.service';
 import { HomeComponent } from './home';
 import { AboutComponent } from './about';
 import { LoginComponent } from './login';
+import { LoginAdminComponent } from './login-admin';
 import { NoContentComponent } from './no-content';
 
 
@@ -63,7 +65,8 @@ const APP_PROVIDERS = [
   ...APP_RESOLVER_PROVIDERS,
   AppState,
   AuthService,
-  CanActivateViaAuthGuard
+  CanActivateViaAuthGuard,
+  CanActivateViaAuthGuardAdmin
  
 ];
 
@@ -84,7 +87,9 @@ type StoreType = {
     HomeComponent,
     NoContentComponent,
     LoginComponent,
-    XLargeDirective
+    LoginAdminComponent,
+    XLargeDirective,
+    ForgotComponent
    
   ],
   imports: [ // import Angular's modules

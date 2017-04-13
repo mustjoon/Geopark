@@ -2,56 +2,34 @@
 
 <div class="login-wrap">
 
-	<H1 style="text-align:center">Geopark</H1>
+	<H1 style="text-align:center">Forgot Password</H1>
 
 	<div class="login-form">
 				
 		<div class="sign-in-htm">
 
 			<br>	
-
+			<div class="errorMsg">{{errorMsg}}</div>
 			<div class="group">
 				<label for="user" class="label">Email</label>
 				<input id="user" [(ngModel)]="email" type="text" class="input">
 			</div>
 							
-			<div class="group">
-				<label for="pass" class="label">Password</label>
-				<input id="pass"  [(ngModel)]="password" type="password" type="password" class="input" data-type="password">			
-			</div>
+		
 							
-			<div class="group">
-				<input id="check" type="checkbox" class="check" checked>
-				<label for="check"><span class="icon"></span> Remember me</label>		
-			</div> 
+			
 
 			<br>
 
 			<div class="group">
-				<input type="button" (click)="emailLogin()" class="button" value="Sign In"/>					
+				<input type="button" (click)="resetPassword()" class="button" value="Sign In"/>					
 			</div>
 				
 			<br>
 
-			<div class="group" style="display:block;margin:0 auto;">
-				<!--<div  (click)="login()" >Sign in using Google</div>-->
+			
 
-				<!-- Google Logo -->
-				<div id="gSignInWrapper">
-				<span class="label">Sign in with:</span>
-				<div id="customBtn" class="customGPlusSignIn" (click)="login()">
-				<span class="icon"></span>
-				<span class="buttonText">Google</span>
-				</div>
-				</div>
-				<div id="name"></div>
-				<!-- Google Logo END -->
-
-			</div>	
-
-			<div class="foot-lnk">
-				<a href="#forgot">Forgotten Password?</a>		
-			</div>
+			
 					
 		</div>
 					

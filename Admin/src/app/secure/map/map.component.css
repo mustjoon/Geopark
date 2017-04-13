@@ -37,7 +37,7 @@ select#selectbox-color {
 }
 
 .uploadthisFILE::-webkit-file-upload-button {
-   background: rgb(63,81,181);
+      background: #00b3b3!important;
    color: white;
    border-radius: 5px;
    margin: 3px, 3px, 3px, 0;

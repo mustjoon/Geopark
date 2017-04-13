@@ -8,17 +8,21 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/take';
 
 @Injectable()
-export class CanActivateViaAuthGuard implements CanActivate {
+export class CanActivateViaAuthGuardAdmin implements CanActivate {
 
   constructor(private authService: AuthService, private router: Router, public af: AngularFire ) {}
 
   canActivate() {
     
   	return this.af.auth.map((auth) => {
-      console.log(auth);
+        
       
         if (!auth) {
-          this.router.navigateByUrl('login');
+          this.router.navigateByUrl('login-admin');
+          return false;
+        }
+        if(auth.provider != 4) {
+          this.router.navigateByUrl('login-admin');
           return false;
         }
         return true;
