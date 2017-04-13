@@ -1,9 +1,25 @@
 h1 {
-	text-align: center;
-	background-color: blue;
+	
 }
 
 h4 {
 	text-align: center;
-	background-color: red;
+	color:white;
+}
+
+.contactContainer {
+	    background: linear-gradient(135deg, #0a4b49, #0a4b49);
+}
+
+.center {
+	margin-left:auto;
+	margin-right:auto;
+	text-align:center;
+	color:white;
+
+
+}
+
+.mdl-textfield__label:after{
+    background-color: white!important;
 }

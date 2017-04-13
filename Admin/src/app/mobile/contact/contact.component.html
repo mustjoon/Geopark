@@ -1,18 +1,28 @@
 
-<div style="width:45vw;height:90vh;float: center;margin: auto;">
-<h1>Ota yhteyttä</h1>
-<h4>Valituksen aihe</h4>
-<!-- OTSIKKO -->
-<mdl-textfield id="otsikko" type="text" label="Otsikko" [(ngModel)]="contact_header" floating-label autofocus></mdl-textfield>
 
-<!-- TEKSTIKENTTÄ -->
-<mdl-textfield rows="10" id="mdl-textfield__input" [(ngModel)]="contact_info" type="text" label="Info" floating-label autofocus>
-</mdl-textfield>
 
-<!-- LÄHETÄ NAPPI -->
-    <div class="mdl-card__actions mdl-card--border" (click)="Send()">
-      <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-        Lähetä
-      </a>
-    </div>
-    </div>
+
+<div class="contactContainer">
+
+	<h2 class="center" >Ota yhteyttä</h2>
+	<h4>Aihe</h4>
+	<!-- OTSIKKO -->
+	<mdl-textfield id="otsikko" type="text" label="Otsikko" [(ngModel)]="contact_header" floating-label autofocus></mdl-textfield>
+
+	<!-- TEKSTIKENTTÄ -->
+	<mdl-textfield  rows="10" id="mdl-textfield__input" [(ngModel)]="contact_info" type="text" label="Info" floating-label autofocus>
+	</mdl-textfield>
+
+	
+
+	<!-- LÄHETÄ NAPPI -->
+	<div class="mdl-card__actions mdl-card--border" (click)="Send()">
+	    <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+		    Lähetä
+	    </a>
+	</div>
+</div>
+
+
+
+mdl-color--white

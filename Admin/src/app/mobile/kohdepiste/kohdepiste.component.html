@@ -7,19 +7,29 @@
 
 </style>
 
-<div  *ngFor="let k of kohde  | async">
-	  
-	  <!-- OTSIKKO KUVA -->asdasda
-	  <div class="kohdepiste-img-header">{{k.name}}</div>
 
-	  <!-- OTSIKKO 
-	  <div class="mdl-card__title" *ngIf="k.$key == 'name'">
-	    	<h2 class="mdl-card__title-text">{{k.$value}}</h2>
-	  </div>
-
-	   INFO 
-	  <div class="mdl-card__supporting-text" *ngIf="k.$key == 'info'">
-		    {{k.$value}}
-	  </div>-->
-
+<div style="back" class="infoContainer">
+	<div class="infoImgContainer">
+		<img class="infoImg" src={{info.img}}>
+		<div class="infoHeader">
+			<div class="infoName">
+				{{info.name}}
+			</div>
+			<div class="infoCategory">
+				{{category}}
+			</div>
+		</div>
+	</div>
+	<div class="infoContent">
+		{{info.info}}
+	</div>
+	<div class="infoBack">
+		<a href="javascript:history.back()">
+			<img src="/assets/img/back.png"/>
+		</a>
+	</div>
 </div>
+
+
+
+

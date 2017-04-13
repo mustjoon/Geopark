@@ -61,10 +61,18 @@
     <!-- NAVIGATION JS-->
     <script>
 
+      function hideNav(){
+         $('.nav__list').removeClass('nav__list--active');
+         $('.nav').addClass('nav__not-active');
+         $(".mdl-layout__content").off('click',hideNav);
+      }
+
         var toggleMenu = function() {
             if($('.nav__list--active').length <= 0){
                 // Open menu
                 $('.nav__list').addClass('nav__list--active');
+
+                $(".mdl-layout__content").on('click',hideNav);
 
                 setTimeout(function(){
                     $('.nav').removeClass('nav__not-active');
@@ -72,6 +80,7 @@
             }
             else{
                 // Hide menu
+                $(".mdl-layout__content").off('click',hideNav);
                 $('.nav__list').removeClass('nav__list--active');
                 $('.nav').addClass('nav__not-active');
             }
