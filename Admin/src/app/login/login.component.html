@@ -33,8 +33,20 @@
 				
 			<br>
 
-			<div class="group">
-			<div  (click)="login()" >Sign in using Google</div>
+			<div class="group" style="display:block;margin:0 auto;">
+				<!--<div  (click)="login()" >Sign in using Google</div>-->
+
+				<!-- Google Logo -->
+				<div id="gSignInWrapper">
+				<span class="label">Sign in with:</span>
+				<div id="customBtn" class="customGPlusSignIn" (click)="login()">
+				<span class="icon"></span>
+				<span class="buttonText">Google</span>
+				</div>
+				</div>
+				<div id="name"></div>
+				<!-- Google Logo END -->
+
 			</div>	
 
 			<div class="foot-lnk">
