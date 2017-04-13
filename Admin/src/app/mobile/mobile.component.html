@@ -1,44 +1,98 @@
 
 <div class="demo-layout-transparent mdl-layout mdl-js-layout">
-  <header class="mdl-layout__header mdl-layout__header--transparent">
-    <div class="mdl-layout__header-row">
-      <!-- Title -->
-      <span class="mdl-layout-title">Title</span>
-      <!-- Add spacer, to align navigation to the right -->
-      <div class="mdl-layout-spacer"></div>
-      <!-- Navigation -->
-      <nav class="mdl-navigation">
-       
-      </nav>
+    <header class="mdl-layout__header mdl-layout__header--transparent">
+        <div class="mdl-layout__header-row">
+            <!-- Title -->
+            <span class="mdl-layout-title">Title</span>
+            <!-- Add spacer, to align navigation to the right -->
+            <div class="mdl-layout-spacer"></div>
+        </div>
+    </header>
+
+    <!-- SHITTY HEADERBAR -->
+    <div class="mobile-header b-green">
+        <div class="mobile-logo">
+            <img class ="mobile-logo-img" src="../assets/img/logo.png" [routerLink]=" ['./home'] " routerLinkActive="active"/>
+        </div>
     </div>
-  </header>
-  <div class="mdl-layout__drawer">
-    <span class="mdl-layout-title">Title</span>
-    <nav class="mdl-navigation">
-      <a class="mdl-navigation__link" [routerLink]=" ['./home'] " routerLinkActive="active">
-        Home
-      </a>
-       <a class="mdl-navigation__link" [routerLink]=" ['.mobile/Category/Pyöräily'] " routerLinkActive="active">
-        ddd
-      </a>
-      <a class="mdl-navigation__link" [routerLink]=" ['./mobile/Category/Kävely'] " routerLinkActive="active">
-        aa
-      </a>
-     <a class="mdl-navigation__link" [routerLink]=" ['./settings'] " routerLinkActive="active">
-        Asetukset
-      </a>
-      <a class="mdl-navigation__link" [routerLink]=" ['./contact'] " routerLinkActive="active">
-        Ota yhteyttä
-      </a>
-      <a class="mdl-navigation__link" [routerLink]=" ['./logout'] " routerLinkActive="active">
-        Logout
-      </a>
+
+    <!-- NAVIGATION -->
+    <nav class="nav">
+
+        <!-- BURGER ICON (TOGGLE DROPDOWN ON/OFF) -->
+        <div class="burger b-green" onclick="toggleMenu()">
+            <div class="burger__patty"></div>
+        </div>
+
+        <!-- DROPDOWN -->
+        <ul class="nav__list b-green">
+            <li class="nav__item" [routerLink]=" ['./home'] " routerLinkActive="active">
+                <a class="nav__link b-green">
+                    <img src="../assets/img/ico1.png" alt="List of routes" height="42" width="42">
+                </a>
+            </li>
+
+            <li class="nav__item" [routerLink]=" ['./home'] " routerLinkActive="active">
+                <a class="nav__link b-green">
+                    <img src="../assets/img/ico3.png" alt="Biking" height="42" width="42">
+                </a>
+            </li>
+
+            <li class="nav__item" [routerLink]=" ['./home'] " routerLinkActive="active">
+                <a class="nav__link b-green">
+                    <img src="../assets/img/ico4.png" alt="Family" height="42" width="42">
+                </a>
+            </li>
+
+            <li class="nav__item" [routerLink]=" ['./home'] " routerLinkActive="active">
+                <a class="nav__link b-green">
+                    <img src="../assets/img/ico2.png" alt="Nature" height="42" width="42">
+                </a>
+            </li>
+
+            <li class="nav__item" [routerLink]=" ['./home'] " routerLinkActive="active">
+                <a class="nav__link b-green">
+                    <img src="../assets/img/ico6.png" alt="Log out" height="42" width="42">
+                </a>
+            </li>
+        </ul>
     </nav>
-  </div>
- <main style="margin-top:10%;" class="mdl-layout__content">
-    <div class="page-content">
-       <router-outlet></router-outlet>
+
+    <div class="mdl-layout__drawer">
+        <span class="mdl-layout-title">Title</span>
+
+
+
+
+        <!-- OLD NAVIGATION
+        <nav class="mdl-navigation">
+        <a class="mdl-navigation__link" [routerLink]=" ['./home'] " routerLinkActive="active">
+        Home
+        </a>
+        <a class="mdl-navigation__link" [routerLink]=" ['.mobile/Category/Pyöräily'] " routerLinkActive="active">
+        ddd
+        </a>
+        <a class="mdl-navigation__link" [routerLink]=" ['./mobile/Category/Kävely'] " routerLinkActive="active">
+        aa
+        </a>
+        <a class="mdl-navigation__link" [routerLink]=" ['./settings'] " routerLinkActive="active">
+        Asetukset
+        </a>
+        <a class="mdl-navigation__link" [routerLink]=" ['./contact'] " routerLinkActive="active">
+        Ota yhteyttä
+        </a>
+        <a class="mdl-navigation__link" [routerLink]=" ['./logout'] " routerLinkActive="active">
+        Logout
+        </a>
+        </nav>-->
     </div>
-  </main>
+
+    <main style="margin-top:10%;" class="mdl-layout__content">
+        <div class="page-content">
+            <router-outlet>
+                
+            </router-outlet>
+        </div>
+    </main>
 </div>
 
