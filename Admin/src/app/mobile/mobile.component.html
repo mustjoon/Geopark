@@ -1,14 +1,6 @@
 
 <div class="demo-layout-transparent mdl-layout mdl-js-layout">
-    <header class="mdl-layout__header mdl-layout__header--transparent">
-        <div class="mdl-layout__header-row">
-            <!-- Title -->
-            <span class="mdl-layout-title">Title</span>
-            <!-- Add spacer, to align navigation to the right -->
-            <div class="mdl-layout-spacer"></div>
-        </div>
-    </header>
-
+    
     <!-- SHITTY HEADERBAR -->
     <div class="mobile-header b-green">
         <div class="mobile-logo">
@@ -17,7 +9,7 @@
     </div>
 
     <!-- NAVIGATION -->
-    <nav class="nav">
+    <nav class="nav nav__not-active">
 
         <!-- BURGER ICON (TOGGLE DROPDOWN ON/OFF) -->
         <div class="burger b-green" onclick="toggleMenu()">
@@ -57,35 +49,6 @@
             </li>
         </ul>
     </nav>
-
-    <div class="mdl-layout__drawer">
-        <span class="mdl-layout-title">Title</span>
-
-
-
-
-        <!-- OLD NAVIGATION
-        <nav class="mdl-navigation">
-        <a class="mdl-navigation__link" [routerLink]=" ['./home'] " routerLinkActive="active">
-        Home
-        </a>
-        <a class="mdl-navigation__link" [routerLink]=" ['.mobile/Category/Pyöräily'] " routerLinkActive="active">
-        ddd
-        </a>
-        <a class="mdl-navigation__link" [routerLink]=" ['./mobile/Category/Kävely'] " routerLinkActive="active">
-        aa
-        </a>
-        <a class="mdl-navigation__link" [routerLink]=" ['./settings'] " routerLinkActive="active">
-        Asetukset
-        </a>
-        <a class="mdl-navigation__link" [routerLink]=" ['./contact'] " routerLinkActive="active">
-        Ota yhteyttä
-        </a>
-        <a class="mdl-navigation__link" [routerLink]=" ['./logout'] " routerLinkActive="active">
-        Logout
-        </a>
-        </nav>-->
-    </div>
 
     <main style="margin-top:10%;" class="mdl-layout__content">
         <div class="page-content">
