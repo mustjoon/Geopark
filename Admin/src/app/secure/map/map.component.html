@@ -48,7 +48,7 @@
     <input type="file" required id="uploadthisFILE" class="uploadthisFILE" label="Kuvalinkki"  (change)="onChange($event)"  floating-label autofocus>
     <div class="helpers" *ngIf="editedKuva"><br>Lisää kuva!</div>
     <mdl-textfield type="text" id="video" label="Videolinkki" [(ngModel)]="target_video" floating-label autofocus></mdl-textfield>
-    <div class="helpers" *ngIf="editedVideo">Anna videon osoite!</div>
+    <div class="helpers" *ngIf="editedVideo">Anna videon url!</div>
     <mdl-textfield type="text" label="Esikatselu etäisyys" [(ngModel)]="target_previewDistance" floating-label autofocus></mdl-textfield>
     <div class="helpers" *ngIf="editedDist">Anna esikatselu etäisyys (1 - 100km)!</div>
     <mdl-textfield type="text" label="Latitude" [(ngModel)]="target_latitude" floating-label autofocus disabled="true"></mdl-textfield>

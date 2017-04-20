@@ -4,11 +4,12 @@
 
 	<!-- OTSIKKO -->
 	<mdl-textfield id="otsikko" type="text" label="Otsikko" [(ngModel)]="contact_header" floating-label autofocus></mdl-textfield>
+	<div class="helpers" *ngIf="editedHead">Anna Aihe!</div>
 
 	<!-- TEKSTIKENTTÄ -->
 	<mdl-textfield  rows="10" id="mdl-textfield__input" [(ngModel)]="contact_info" type="text" label="Info" floating-label autofocus>
 	</mdl-textfield>
-
+	<div class="helpers" *ngIf="editedInfo">Anna lisätietoa!</div>
 	
 	<!-- LÄHETÄ NAPPI -->
 	<div class="mdl-card__actions mdl-card--border" (click)="Send()">

@@ -173,7 +173,7 @@ export class MapComponent extends OnInit {
           this.editedNimi = true;      
         }
 
-        if(this.target_info == undefined){
+        if(this.target_info == undefined || this.target_info == ""){
           this.text += "Anna lisäinfo.\n";
           this.editedInfo = true;
         }
@@ -184,7 +184,7 @@ export class MapComponent extends OnInit {
           this.editedDist = true;
         }
 
-        if(this.kuva == undefined){
+        if(this.target_img == undefined || this.target_img == ""){
           this.text += "Anna kuva.\n";
           this.editedKuva = true;
         }

@@ -29,6 +29,10 @@ export class ContactComponent extends OnInit {
   afs: any;
   time: any;
 
+  text;
+  editedInfo = false;
+  editedHead = false;
+
 	constructor(af: AngularFire, private _routeParams: ActivatedRoute, private router: Router){
       super();
       this.afs = af;
@@ -41,9 +45,27 @@ export class ContactComponent extends OnInit {
 
   public Send()
   {
+      this.text = "";
+      this.editedHead = false;
+      this.editedInfo = false;
+
+      if (this.contact_header == undefined || this.contact_header == ""){
+        this.editedHead = true;
+        this.text += "Anna otsikko\n";
+      }
+      if (this.contact_info == undefined || this.contact_info == ""){
+        this.editedInfo = true;
+        this.text += "Anna infoo";
+      }
+      if (this.text != ""){
+        console.log(this.text);
+        return;
+      }
+      else{
       this.afs.database.list("/geopark_dev/Yhteys/").
       push({Aika: this.time, Otsikko: this.contact_header, Sisalto: this.contact_info});
       this.router.navigateByUrl('/mobile/thanks');
+    }
   }
   
 }
