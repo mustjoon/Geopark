@@ -24,7 +24,7 @@
 <mdl-dialog #editUserDialog
             [mdl-dialog-config]="{
               clickOutsideToClose: true,
-              styles:{'width': '300px'},
+              styles:{'width': '300px', 'height': '70vh', 'overflow': 'scroll'},
               isModal:true,
               openFrom: editUserButton,
               enterTransitionDuration: 400,
@@ -39,13 +39,18 @@
   <select class="selectbox" [(ngModel)]="target_category" >
     <option *ngFor="let c of categories  | async" value="{{c.$value}}" >{{c.$value}}</option>
   </select>
+  <div class="helpers" *ngIf="editedCat">Valitse kategoria!</div>
 
-    <mdl-textfield type="text" id="nameasd" label="Nimi" [(ngModel)]="target_name" floating-label autofocus></mdl-textfield>
+    <mdl-textfield type="text" id="nameasd" label="Nimi" [(ngModel)]="target_name" floating-label autofocus></mdl-textfield>    
+    <div class="helpers" *ngIf="editedNimi">Anna nimi!</div>
     <mdl-textfield type="text" label="Lisäinfo" [(ngModel)]="target_info" floating-label autofocus></mdl-textfield>
-    <input type="file" id="uploadthisFILE" class="uploadthisFILE" label="Kuvalinkki"  (change)="onChange($event)"  floating-label autofocus>
-
-    <mdl-textfield type="text" label="Videolinkki" [(ngModel)]="target_video"  floating-label autofocus></mdl-textfield>
+    <div class="helpers" *ngIf="editedInfo">Anna lisäinfoa!</div><br>
+    <input type="file" required id="uploadthisFILE" class="uploadthisFILE" label="Kuvalinkki"  (change)="onChange($event)"  floating-label autofocus>
+    <div class="helpers" *ngIf="editedKuva"><br>Lisää kuva!</div>
+    <mdl-textfield type="text" id="video" label="Videolinkki" [(ngModel)]="target_video" floating-label autofocus></mdl-textfield>
+    <div class="helpers" *ngIf="editedVideo">Anna videon osoite!</div>
     <mdl-textfield type="text" label="Esikatselu etäisyys" [(ngModel)]="target_previewDistance" floating-label autofocus></mdl-textfield>
+    <div class="helpers" *ngIf="editedDist">Anna esikatselu etäisyys (1 - 100km)!</div>
     <mdl-textfield type="text" label="Latitude" [(ngModel)]="target_latitude" floating-label autofocus disabled="true"></mdl-textfield>
     <mdl-textfield type="text" label="Longitude" [(ngModel)]="target_longitude" floating-label autofocus disabled="true"></mdl-textfield>
   </div>

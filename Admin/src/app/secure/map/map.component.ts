@@ -3,7 +3,6 @@ import {googleMapsService} from './googleMaps.service';
 import {googleMapsServiceFinal} from '../../googleMapsService';
 import { Overlay } from 'angular2-modal';
 import {ModalComponent} from './Modal/modal.component';
-
 import { MdlDialogService,
   MdlDialogReference,MdlSnackbarService,IOpenCloseRect } from 'angular2-mdl';
 import {
@@ -63,7 +62,13 @@ export class MapComponent extends OnInit {
     target_longitude: string;
     target_previewDistance: any;
     storageRef: any;
-
+    public editedNimi = false;
+    public editedInfo = false;
+    public editedCat = false;
+    public editedKuva = false;
+    public editedDist = false;
+    public editedVideo = false;
+    text;
 
     constructor(modal: ModalComponent, @Inject(FirebaseApp) firebaseApp: any, af: AngularFire, private dialogService: MdlDialogService,
     private snackbarService: MdlSnackbarService,private googleMapsService : googleMapsService,
@@ -110,6 +115,18 @@ export class MapComponent extends OnInit {
 
     public onDialogHide(){
 
+      this.editedKuva = false;
+      this.editedNimi = false;
+      this.editedInfo = false;
+      this.editedCat = false;
+      this.editedVideo = false;
+      this.editedDist = false;
+      this.target_category = "";
+      this.target_name = "";
+      this.target_info = "";
+      this.target_img = "";
+      this.target_video = "";
+      this.target_previewDistance = 50;
     }
 
    
@@ -117,6 +134,7 @@ export class MapComponent extends OnInit {
 
     public closeDialog(){
 
+      
     }
 
     public addMarker(location) {
@@ -135,14 +153,68 @@ export class MapComponent extends OnInit {
     
     public SaveNewLocationInfo()
     {
+      this.text = "";
+      this.editedNimi = false;
+      this.editedInfo = false;
+      this.editedCat = false;
+      this.editedVideo = false;
+      this.editedDist = false;
+      this.editedKuva = false;
+
+      console.log(this.target_previewDistance);
 
         if(this.target_category == undefined){
-          alert("Anna kategoria.");
-          return;
+          this.text += "Anna kategoria.\n";   
+          this.editedCat = true;     
         }
 
-        // Get data from the form and push to new_targets
-        this.new_targets.push(
+        if(this.target_name == undefined || this.target_name.length < 3){
+          this.text += "Anna nimi.\n"; 
+          this.editedNimi = true;      
+        }
+
+        if(this.target_info == undefined){
+          this.text += "Anna lisäinfo.\n";
+          this.editedInfo = true;
+        }
+
+        if (!parseInt(this.target_previewDistance)) {
+          console.log("Nou int");
+          this.text += "Anna esikatselu etäisyys (1 - 100km).\n";
+          this.editedDist = true;
+        }
+
+        if(this.kuva == undefined){
+          this.text += "Anna kuva.\n";
+          this.editedKuva = true;
+        }
+
+        if (this.target_video != undefined && this.target_video != ""){
+          var re = /^(https?\:\/\/)?(www\.youtube\.com|youtu\.?be)\/.+$/;
+          var test = re.test(this.target_video);
+          if (test == true)
+          {
+            console.log("Jee");
+          } 
+          else
+          {
+            this.editedVideo = true;
+            this.text += "Anna videon osoite.\n"
+            console.log("Noup");          
+          }
+        }
+
+        if (this.text != "")
+        {
+          // alert("Anna tarvittavat tiedot:\n" + this.text);
+          console.log(this.text);
+          return;
+        }
+        else
+        {
+          console.log("Tiedot oikein!");
+          // Get data from the form and push to new_targets
+          this.new_targets.push(
             {
                 category :       this.target_category,
                 name :           this.target_name,
@@ -154,7 +226,9 @@ export class MapComponent extends OnInit {
                 longitude:       this.TMP_currentMarkerLocation.lng()
 
             }
-        );
+          );
+        }
+        
 
         document.getElementById("closeBtn").click();
         var marker = new google.maps.Marker({
@@ -165,7 +239,7 @@ export class MapComponent extends OnInit {
 
     public FinalSave()
     {
-      //let lol = this.afs.database.list('/geopark_dev/Kohteet/Puut/');
+      // let lol = this.afs.database.list('/geopark_dev/Kohteet/Puut/');
       let lol = this.afs.database.list('/geopark_dev/Kohteet/');
     
       //TODO

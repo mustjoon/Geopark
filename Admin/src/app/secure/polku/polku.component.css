@@ -19,8 +19,8 @@ select.selectbox, select#selectbox-color {
    font-size: inherit;
    /*margin: 20px;*/
    margin: 20px 0px;
-   overflow: hidden;
-   padding: 5px 10px;
+   overflow: auto;
+   padding: 1px 10px;
    text-overflow: ellipsis;
    white-space: nowrap;
    width: 100%;
@@ -71,6 +71,15 @@ select#selectbox-color {
 }
 
 #route_name, #label_category, #select_category, #mdl-textfield__input {
-   margin-left: 5px;
+   margin-left: 3px;
    width: 98%;
+}
+
+#select_category {
+  height: 50px;
+  text-align: center;
+}
+
+.helpers {
+   color: red;
 }

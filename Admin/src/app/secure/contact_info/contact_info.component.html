@@ -1,9 +1,9 @@
 <div class="contact_info">
-<h1>Kysymykset</h1>
+<h1>Palaute</h1>
 <ul>
 	<li *ngFor="let r of allComplains | async">
-        <h4  [routerLink]=" [r.$key] " >{{ r.Otsikko }}</h4>
-        <p  [routerLink]=" [r.$key] " >{{ r.Aika }}</p>
+        <h4  [routerLink]=" [r.$key] " >Otsikko: {{ r.Otsikko }}</h4>
+        <p  [routerLink]=" [r.$key] " >{{ r.Aika | date:'d MMM y H:m' }}</p>
         <p  [routerLink]=" [r.$key] " >{{ r.Sisalto }}</p>
 	</li>
 </ul>

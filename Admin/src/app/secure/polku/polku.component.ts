@@ -55,6 +55,9 @@ export class PolkuComponent extends OnInit {
     route_category: any;
     route_info: any;
 
+    public editedRoute = false;
+    public editedCat = false;
+    text;
 
     currentlySelectedSpotData: any[];
 
@@ -163,8 +166,34 @@ export class PolkuComponent extends OnInit {
 
     public SaveRoute()
     {
-          this.afs.database.list("/geopark_dev/Reitit/" + this.route_category + "/").
-          update(this.route_name+"/" ,{Pisteet: this.route, Nimi: this.route_name, Info: this.route_info});
+        this.editedRoute = false;
+        this.editedCat = false;
+        this.text = "";
+
+        if (this.route_name == undefined && this.route_name != ""){
+            this.editedRoute = true;
+            this.text += "Anna reitin nimi!\n";
+        }
+
+        if (this.route_category == undefined){
+            this.editedCat = true;
+            this.text += "Anna kategoria!\n";
+        }
+
+        if (this.route.length < 1){
+            this.text += "Anna piste!";
+        }
+
+        if (this.text != ""){
+            console.log(this.text);
+            return;
+        }
+        else {
+            console.log("Jep!");
+            this.afs.database.list("/geopark_dev/Reitit/" + this.route_category + "/").
+            update(this.route_name+"/" ,{Pisteet: this.route, Nimi: this.route_name, Info: this.route_info});
+        }
+          
         
     }
     
