@@ -64,9 +64,9 @@ export class LocationsComponent extends OnInit {
         this.locations = af.database.list('/geopark_dev/Reitit/' + this.id + "/",
           {query: {orderByKey:true,equalTo:this.routeName}});
       });
-      this.user_icon = "../../assets/img/person_icon.png";
-      this.marker_icon_locked = "../../assets/img/marker_locked.png";
-      this.marker_icon_tree = "../../assets/img/marker_puu.png";
+      this.user_icon = "../../assets/img/your-spot.png";
+      this.marker_icon_locked = "../../assets/img/locked-spot.png";
+      this.marker_icon_tree = "../../assets/img/unlocked-spot.png";
 
       this.router = _router;
     }
@@ -193,9 +193,9 @@ export class LocationsComponent extends OnInit {
            var flightPath = new google.maps.Polyline({
                         path: markers,
                         geodesic: true,
-                        strokeColor: '#FF0000',
-                        strokeOpacity: 1.0,
-                        strokeWeight: 2
+                        strokeColor: '#000000',
+                        strokeOpacity: 0.75,
+                        strokeWeight: 5
                     })
 
             flightPath.setMap(map);

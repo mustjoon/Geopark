@@ -1,4 +1,14 @@
-h1 {
-	text-align: center;
-	background-color: red;
+.homeContainer
+{
+	width:80%;
+	margin:5vh auto 5vh auto;
+}
+
+.front-page-img{
+	width:100%;
+	position:fixed;
+	top:10vh;
+	left:0;
+	opacity: 0.35;
+	z-index: -1000;
 }

@@ -6,22 +6,18 @@
 
 				<div class="loginAdminForm mdl-card mdl-shadow--6dp">
 			<div class="mdl-card__title mdl-color--primary mdl-color-text--white">
-				<h2 class="mdl-card__title-text">Geopark Login</h2>
+				<h2 class="mdl-card__title-text">Geopark hallintapaneeli</h2>
 			</div>
 	  	<div class="mdl-card__supporting-text">
 				
-					<div class="mdl-textfield mdl-js-textfield">
-						<input [(ngModel)]="email" class="mdl-textfield__input" type="text" id="username" />
-						<label for="username" class="mdl-textfield__label" >Email</label>
-					</div>
-					<div class="mdl-textfield mdl-js-textfield">
-						<input [(ngModel)]="password"  class="mdl-textfield__input" type="password" id="userpass" />
-						<label   class="mdl-textfield__label" for="userpass" >Password</label>
-					</div>
-				
+
+				 <mdl-textfield id="route_name" type="text" label="Sähköposti" [(ngModel)]="email" floating-label autofocus></mdl-textfield>
+				  
+				 <mdl-textfield id="route_name" type="password" label="Salasana" [(ngModel)]="password" floating-label autofocus></mdl-textfield>
+
 			</div>
 			<div class="mdl-card__actions mdl-card--border">
-				<button (click)="emailLogin()" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Log in</button>
+				<button (click)="emailLogin()" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Kirjaudu sisään</button>
 			</div>
 		</div>
 		</div>
