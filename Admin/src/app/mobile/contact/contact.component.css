@@ -8,18 +8,31 @@ h4 {
 }
 
 .contactContainer {
-	    background: linear-gradient(135deg, #0a4b49, #0a4b49);
+	width:80%;
+	margin:auto;
 }
 
+.contactContainer .mdl-button {
+	width:100%;
+	background-color: #00b3b3;
+}
+.contactContainer .mdl-button.mdl-button--colored
+{
+	color:white;
+}
 .center {
 	margin-left:auto;
 	margin-right:auto;
 	text-align:center;
 	color:white;
-
-
 }
 
 .mdl-textfield__label:after{
     background-color: white!important;
+}
+.contact-header
+{
+	font-size: 26px;
+	color:#00b3b3;
+	padding-bottom:30px;
 }

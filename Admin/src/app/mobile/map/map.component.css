@@ -2,31 +2,42 @@
   height: 300px;
 }
 
-.category.container{
+.category-container{
+width:80% !important;
+margin:auto !important;
+text-align: center;
+}
+
+
+.category.container
+{
 	width:100%;
 	height:auto;
 	background:red;
 }
 
-.category-item{
+.category-item
+{
 	width:50%;
 	height:20vh;
 	float:left;
 }
 
-.category-header{
+.category-header
+{
 	text-align: center;
 	font-size:26px;
 }
 
-.category-img{
+.category-img
+{
 	width:80%;
 	margin-left:10%;
 	height:auto;
 	border-radius:1000px;
 }
 
-.category-hint{
+.category-hint
+{
 	color:lightgray;
 }
-

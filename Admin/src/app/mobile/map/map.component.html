@@ -1,32 +1,35 @@
 <h1 class="category-header">Kategoriat</h1>
 <div class="category-hint">Paina kategoriasta nähdäksesi reitit!</div>
 <br>
-<ul>
-    <li *ngFor="let location of categories | async">
-        <a  [routerLink]=" ['../location/'+location.$value] " >{{ location.$value }}</a>
-    </li>
-</ul> 
 
- <div class="paper preview-1">
-    <div class="box">
+<div class="category-container">
+    <ul>
+        <li *ngFor="let location of categories | async">
+            <a  [routerLink]=" ['../location/'+location.$value] " >{{ location.$value }}</a>
+        </li>
+    </ul> 
 
-        <div class="item walk" (click)="OpenCategory($event)" *ngFor="let l of allData">
-            <div class="box">
-                <div class="item-icon walk"></div>
-                <p>{{l.cat}}</p>
-                <img src="../assets/img/walk.svg" alt="walk" width="100" height="100" style="margin-left: 90px; margin-top:20px;">
-                <div class="detail" *ngFor="let o of l.routes" >
-                    <div  [routerLink]=" ['../location/'+l.cat+'/'+o.name] " >
-                        <p>{{o.name}} --- {{o.distance}} km</p>
-                        <div class="counter">
-                            <span class="number">0</span>
+     <div class="paper preview-1">
+        <div class="box">
+
+            <div class="item walk" (click)="OpenCategory($event)" *ngFor="let l of allData">
+                <div class="box">
+                    <div class="item-icon walk"></div>
+                    <p>{{l.cat}}</p>
+                    <img src="{{l.img}}" width="100" height="100" style="margin-top:20px;">
+                    <div class="detail" *ngFor="let o of l.routes" >
+                        <div  [routerLink]=" ['../location/'+l.cat+'/'+o.name] " >
+                            <p>{{o.name}} --- {{o.distance}} km</p>
+                            <div class="counter">
+                                <span class="number">0</span>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="detail" *ngIf="l.routes?.length == 0">
-                	<p>
-                		Kategoriassa ei ole reittejä
-                	</p>
+                    <div class="detail" *ngIf="l.routes?.length == 0">
+                    	<p>
+                    		Kategoriassa ei ole reittejä
+                    	</p>
+                    </div>
                 </div>
             </div>
         </div>

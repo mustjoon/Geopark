@@ -84,10 +84,11 @@ export class MapComponent extends OnInit {
      this.categories = this.afs.database.list('/geopark_dev/config/Reitit_Kategoriat').map(function(data,value){
          data.map(function(val,index){
             allData[index] = {};
-           allData[index].cat = val.$value;
+           allData[index].cat = val.$key;
            allData[index].routes = [];
+           allData[index].img = val.img;
            observables = [];
-           let mySub = afs.database.list('/geopark_dev/Reitit/' + val.$value + "/").map(function(data,dind){
+           let mySub = afs.database.list('/geopark_dev/Reitit/' + val.$key + "/").map(function(data,dind){
                console.log("WHAT",data);
               data.map(function(route,i){
                 console.log(route);

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Quicksand');
+
 .mdl-layout__header-row {
 	background: #dadada;
 }
@@ -10,6 +12,7 @@
 /* background: #efefef; */
 * {
   box-sizing: border-box;
+  font-family: 'Quicksand', sans-serif;
 }
 
 body {
@@ -314,7 +317,6 @@ ul {
 .item-icon {
     background: url();
     height: 60px;
-    width: 65px;
     float: left;
     margin-right: 10px;
     -webkit-transition: all 200ms ease;
