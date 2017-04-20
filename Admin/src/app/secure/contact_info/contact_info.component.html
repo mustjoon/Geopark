@@ -2,9 +2,9 @@
 <h1>Palaute</h1>
 <ul>
 	<li *ngFor="let r of allComplains | async">
-        <h4  [routerLink]=" [r.$key] " >Otsikko: {{ r.Otsikko }}</h4>
-        <p  [routerLink]=" [r.$key] " >{{ r.Aika | date:'d MMM y H:m' }}</p>
-        <p  [routerLink]=" [r.$key] " >{{ r.Sisalto }}</p>
+        <h4   >{{ r.Otsikko }}</h4>
+        <p  >{{ r.Aika | date:'d MMM y H:m' }}</p>
+        <p  >{{ r.Sisalto }}</p>
 	</li>
 </ul>
 </div>
