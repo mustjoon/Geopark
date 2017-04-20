@@ -12,6 +12,7 @@ import { HomeComponent } from './home/home.component';
 import { ContactComponent } from './contact/contact.component';
 import { SettingsComponent } from './settings/settings.component';
 import { LogoutComponent } from './logout/logout.component';
+import { ThanksComponent } from './thanks/thanks.component';
 import { MapModule } from './map/map.module';
 import { MdlModule } from 'angular2-mdl';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -30,7 +31,8 @@ console.log('`Barrel` bundle loaded asynchronously');
     HomeComponent,
     ContactComponent,
     SettingsComponent,
-    LogoutComponent
+    LogoutComponent,
+    ThanksComponent
 
   ],
   imports: [
