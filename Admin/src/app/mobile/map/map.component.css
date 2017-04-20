@@ -16,7 +16,7 @@
 
 .category-header{
 	text-align: center;
-	font-size:20px;
+	font-size:26px;
 }
 
 .category-img{
@@ -25,3 +25,8 @@
 	height:auto;
 	border-radius:1000px;
 }
+
+.category-hint{
+	color:lightgray;
+}
+
