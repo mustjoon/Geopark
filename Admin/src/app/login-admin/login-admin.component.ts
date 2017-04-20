@@ -67,7 +67,7 @@ export class LoginAdminComponent implements OnInit {
     {
       provider: AuthProviders.Password,
       method: AuthMethods.Password,
-    }).then(res=>  this.router.navigateByUrl('secure'))
+    }).then(res=>  this.router.navigateByUrl('secure/polku'))
     .catch(err => console.log("error"))
     
   }

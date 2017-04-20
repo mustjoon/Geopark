@@ -76,10 +76,19 @@ select#selectbox-color {
 }
 
 #select_category {
-  height: 50px;
+
   text-align: center;
 }
 
 .helpers {
    color: red;
+}
+
+.polkucontainer {
+  width:90%;
+  margin:auto;
+}
+
+.categoryLabel {
+  color: rgba(0,0,0,.12);
 }
